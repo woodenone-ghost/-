@@ -1,0 +1,42 @@
+{
+    "entityName": "买家信息",
+    "abbr": "buyer",
+    "fields": [
+        {
+            "fId": "idBuyer",
+            "fNm": "买家id"
+        },
+        {
+            "fId": "nameBuyer",
+            "fNm": "买家姓名"
+        },
+        {
+            "fId": "sexBuyer",
+            "fNm": "买家性别"
+        },
+        {
+            "fId": "ageBuyer",
+            "fNm": "买家年龄"
+        },
+        {
+            "fId": "addressBuyer",
+            "fNm": "买家地址"
+        },
+        {
+            "fId": "pastHistoryBuyer",
+            "fNm": "买家既往史"
+        },
+        {
+            "fId": "childNameBuyer",
+            "fNm": "买家子女姓名"
+        },
+        {
+            "fId": "childIdentityBuyer",
+            "fNm": "买家子女身份"
+        },
+        {
+            "fId": "childPhoneBuyer",
+            "fNm": "买家子女手机号"
+        }
+    ]
+}

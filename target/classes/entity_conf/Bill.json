@@ -1,0 +1,42 @@
+{
+    "entityName": "账单信息",
+    "abbr": "bill",
+    "fields": [
+        {
+            "fId": "id",
+            "fNm": "账单编号"
+        },   
+        {
+            "fId": "idBuyer",
+            "fNm": "买家id"
+        },
+        {
+            "fId": "idCommodity",
+            "fNm": "商品id"
+        },
+        {
+            "fId": "idSeller",
+            "fNm": "卖家id"
+        },
+        {
+            "fId": "quantity",
+            "fNm": "数量"
+        },
+        {
+            "fId": "price",
+            "fNm": "总价"
+        },
+        {
+            "fId": "time",
+            "fNm": "日期"
+        },
+        {
+            "fId": "state",
+            "fNm": "状态"
+        },
+        {
+            "fId": "evaluation",
+            "fNm": "评价"
+        }
+    ]
+}

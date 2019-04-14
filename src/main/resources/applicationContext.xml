@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+     http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+	<mvc:annotation-driven />
+
+	<context:component-scan base-package="zhangjie">
+	</context:component-scan>
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName">
+			<value>com.mysql.cj.jdbc.Driver</value>
+		</property>
+		<property name="url">
+			<value>jdbc:mysql://localhost:3306/bishe?serverTimezone=GMT</value>
+		</property>
+		<property name="username">
+			<value>root</value>
+		</property>
+		<property name="password">
+			<value>19ZHang7758258</value>
+		</property>
+	</bean>
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="typeAliasesPackage" value="zhangjie.model" />
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations" value="classpath:zhangjie/mapper/*.xml" />
+		<property name="plugins">
+			<bean class="zhangjie.dao.mybatis.interceptor.PagerInterceptor" />
+		</property>
+	</bean>
+
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory"></constructor-arg>
+	</bean>
+
+	<bean class="zhangjie.util.ApplicationContextUtil"></bean>
+
+	<mvc:resources location="/resources/" mapping="/resources/**"></mvc:resources>
+
+	<!-- 异常处理器 -->
+	<bean class="zhangjie.web.interceptor.ExceptionResolver" />
+
+	<bean id="stringConverter"
+		class="org.springframework.http.converter.StringHttpMessageConverter">
+		<property name="supportedMediaTypes">
+			<list>
+				<value>text/plain;charset=UTF-8</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="jsonConverter"
+		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"></bean>
+
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/resources/**" />
+			<bean id="sessionChecker" class="zhangjie.web.interceptor.SessionChecker">
+				<property name="ignoredUrls"
+					value="/,/login,/login/submit,/loginout,/manager/login,/register,/register/submit,/register/identity,/register/buyer/submit,/register/seller/submit,/noPermission"></property>
+				<property name="managerPermissions"
+					value="/buyer/manage,/buyer/qry,/buyer/edit,/buyer/edit/submit,/buyer/delete,/buyer/detail,/seller/manage,/seller/qry,/seller/edit,/seller/edit/submit,/seller/delete,/seller/detail,/changePassword,/changePassword/submit"></property>
+				<property name="buyerPermissions" value="/changePassword,/changePassword/submit,/userInformation,/userInformation/submit"></property>
+				<property name="sellerPermissions" value="/changePassword,/changePassword/submit,/userInformation,/userInformation/submit"></property>
+			</bean>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/**/qry" />
+			<mvc:exclude-mapping path="/resources/**" />
+			<bean id="qryParamCollector" class="zhangjie.web.interceptor.QryParamCollector"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" />
+		<property name="suffix" value=".ftl"></property>
+		<property name="contentType" value="text/html;charset=utf-8"></property>
+		<property name="requestContextAttribute" value="request" />
+		<property name="exposeRequestAttributes" value="true" />
+		<property name="exposeSessionAttributes" value="true" />
+		<property name="exposeSpringMacroHelpers" value="true" />
+	</bean>
+
+	<bean id="freeMarkerConfigurer"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPath" value="/WEB-INF/freemarker/" />
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="template_update_delay">10</prop>
+				<prop key="locale">zh_CN</prop>
+				<prop key="default_encoding">UTF-8</prop>
+				<prop key="number_format">#.##</prop>
+				<prop key="date_format">yyyy-MM-dd</prop>
+				<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+			</props>
+		</property>
+	</bean>
+</beans>

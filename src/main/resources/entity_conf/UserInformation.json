@@ -1,0 +1,22 @@
+{
+    "entityName": "用户信息",
+    "abbr": "userInformation",
+    "fields": [
+        {
+            "fId": "id",
+            "fNm": "用户id"
+        },
+        {
+            "fId": "account",
+            "fNm": "用户账号"
+        },
+        {
+            "fId": "password",
+            "fNm": "用户密码"
+        },
+        {
+            "fId": "identity",
+            "fNm": "用户身份"
+        }
+    ]
+}

@@ -1,0 +1,26 @@
+{
+    "entityName": "卖家信息",
+    "abbr": "seller",
+    "fields": [
+        {
+            "fId": "idSeller",
+            "fNm": "卖家id"
+        },
+        {
+            "fId": "nameSeller",
+            "fNm": "卖家姓名"
+        },
+        {
+            "fId": "addressSeller",
+            "fNm": "卖家地址"
+        },
+        {
+            "fId": "goodSeller",
+            "fNm": "卖家好评数"
+        },
+        {
+            "fId": "badSeller",
+            "fNm": "卖家差评数"
+        }
+    ]
+}

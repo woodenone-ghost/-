@@ -1,0 +1,42 @@
+{
+    "entityName": "商品信息",
+    "abbr": "commodity",
+    "fields": [
+        {
+            "fId": "id",
+            "fNm": "商品编号"
+        },   
+        {
+            "fId": "icon",
+            "fNm": "商品头像"
+        },
+        {
+            "fId": "name",
+            "fNm": "商品名称"
+        },
+        {
+            "fId": "price",
+            "fNm": "商品价格"
+        },
+        {
+            "fId": "category",
+            "fNm": "商品类别"
+        },
+        {
+            "fId": "business",
+            "fNm": "生产厂商"
+        },
+        {
+            "fId": "characteristic",
+            "fNm": "商品特性"
+        },
+        {
+            "fId": "salesVolume",
+            "fNm": "总销量"
+        },
+        {
+            "fId": "evaluation",
+            "fNm": "平均评价"
+        }
+    ]
+}
