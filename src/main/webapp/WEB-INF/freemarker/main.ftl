@@ -51,7 +51,7 @@
 					  	<tr>
 					  	  <th data-field="select" data-checkbox="true"></th>
 					      <th data-field="id">${entityConf.fields["id"].fName}</th>
-					      <th data-field="idBuyer">${entityConf.fields["idBuyer"].fName}</th>
+					      <th data-field="accountBuyer">${entityConf.fields["accountBuyer"].fName}</th>
 					      <th data-field="idCommodity">${entityConf.fields["idCommodity"].fName}</th>
 					      <th data-field="quantity">${entityConf.fields["quantity"].fName}</th>
 					      <th data-field="price">${entityConf.fields["price"].fName}</th>

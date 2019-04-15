@@ -38,7 +38,7 @@
 					<@qryInput fId="id" colClass="col-lg-6" />
 					<@qryInput fId="name" colClass="col-lg-6" />
 					<@qryInput fId="category" colClass="col-lg-6" />
-					<@qryInput fId="business" colClass="col-lg-6" />
+					<@qryInput fId="businessNameName" colClass="col-lg-6" />
 				</@qryForm>
 				
 				<div style="position: relative;top: 40px;">
@@ -57,7 +57,7 @@
 				  	  <th data-field="id">${entityConf.fields["id"].fName}</th>
 				      <th data-field="name">${entityConf.fields["idBuyer"].fName}</th>
 				      <th data-field="category">${entityConf.fields["idCommodity"].fName}</th>
-				      <th data-field="business">${entityConf.fields["idSeller"].fName}</th>
+				      <th data-field="businessName">${entityConf.fields["idSeller"].fName}</th>
 				      <th data-field="price">${entityConf.fields["price"].fName}</th>
 				      <th data-field="salesVolume">${entityConf.fields["time"].fName}</th>
 				    </tr>
@@ -79,7 +79,7 @@
 			params._QRY_id = $("#id").val()
     		params._QRY_name = $("#name").val()
     		params._QRY_category = $("#category").val()
-    		params._QRY_business = $("#business").val()
+    		params._QRY_businessName = $("#businessName").val()
     		return params
   		}
   		
@@ -90,7 +90,7 @@
       			_QRY_id = $("#id").val(),
       			_QRY_name : $("#name").val(),
       			_QRY_category : $("#category").val(),
-      			_QRY_business : $("#business").val()
+      			_QRY_businessName : $("#businessName").val()
     		}, function (data) {
     		var $qryTable=$("#${entityAbbr}QryTable");
       		$qryTable.bootstrapTable("load", data.data.pager)
@@ -112,7 +112,7 @@
 					_QRY_id: {digits:true},
 					_QRY_name: {maxlength:32},	
 					_QRY_category: {maxlength:64},
-					_QRY_business: {digits:true}
+					_QRY_businessName: {maxlength:32}
 				},
 	        	submitHandler:function(form){
 	            	$("#qryButton").attr("disabled","disabled");

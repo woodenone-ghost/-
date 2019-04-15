@@ -18,7 +18,7 @@ public class CommodityDAOTest extends BaseTest {
 			entity.setName("name_"+i);
 			entity.setPrice(1.23+i);
 			entity.setCategory("category_"+i);
-			entity.setBusiness(28);
+			entity.setBusinessName("张杰公司");
 			entity.setCharacteristic("characteristic_"+i);
 			entity.setSalesVolume(0);
 			entity.setEvaluation("0");

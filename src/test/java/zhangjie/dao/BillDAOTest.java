@@ -15,9 +15,9 @@ public class BillDAOTest extends BaseTest {
 		Bill entity = new Bill();
 		Date time=new Date();
 		for (int i = 1; i <= 25; i++) {
-			entity.setIdBuyer(21);
+			entity.setAccountBuyer("605699928");
 			entity.setIdCommodity(3);
-			entity.setIdSeller(28);
+			entity.setNameSeller("张杰公司");
 			entity.setQuantity(1);
 			entity.setPrice(0.23+i*19);
 			entity.setTime(time);

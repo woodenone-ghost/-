@@ -7,16 +7,16 @@
             "fNm": "账单编号"
         },   
         {
-            "fId": "idBuyer",
-            "fNm": "买家id"
+            "fId": "accountBuyer",
+            "fNm": "买家账号"
         },
         {
             "fId": "idCommodity",
             "fNm": "商品id"
         },
         {
-            "fId": "idSeller",
-            "fNm": "卖家id"
+            "fId": "nameSeller",
+            "fNm": "卖家名称"
         },
         {
             "fId": "quantity",

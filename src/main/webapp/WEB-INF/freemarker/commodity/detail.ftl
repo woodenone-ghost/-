@@ -10,7 +10,7 @@
 	<@detail fId="name" />
 	<@detail fId="price" />
 	<@detail fId="category" />
-	<@detail fId="business" />
+	<@detail fId="businessName" />
 	<@detail fId="characteristic" />
 	<@detail fId="salesVolume" />
 	<@detail fId="evaluation" />

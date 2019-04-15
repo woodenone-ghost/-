@@ -14,7 +14,7 @@
 		<@edit fId="name" />
 		<@edit fId="price" />
 		<@edit fId="category" />
-		<@edit fId="business" />
+		<@edit fId="businessName" />
 		<@edit fId="characteristic" />
 		<@edit fId="salesVolume" />
 		<@edit fId="evaluation" />

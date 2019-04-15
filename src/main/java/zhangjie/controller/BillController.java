@@ -49,9 +49,9 @@ public class BillController extends BaseController {
 	public @ResponseBody AjaxResult todayBills(Integer pageNumber, Integer pageSize) {
 		Map<String, String> qryParamMap = new HashMap<String, String>();
 		Date now =new Date();
-		SimpleDateFormat sdf1 =new SimpleDateFormat("yyyy-MM-dd" );
+		SimpleDateFormat sdf1 =new SimpleDateFormat("yyyy-MM-dd");
 		String time = sdf1.format(now);
-		qryParamMap.put("time", "2019-04-13");
+		qryParamMap.put("time", "2019-04-15");
 		qryParamMap.put("idSeller", this.getSessionUser().getId().toString());
 		logger.info("分页查询开始：" + qryParamMap);
 		Pager<Bill> p = billDAO.selectByPage(pageNumber, pageSize, qryParamMap);
@@ -89,9 +89,9 @@ public class BillController extends BaseController {
 
 		// 字段检查
 		AssertUtil.argIsNotNull(id, "id is null");
-		AssertUtil.argIsNotNull(entity.getIdBuyer(), "idBuyer is null");
+		AssertUtil.argIsNotNull(entity.getAccountBuyer(), "accountBuyer is null");
 		AssertUtil.argIsNotNull(entity.getIdCommodity(), "idCommodity is null");
-		AssertUtil.argIsNotNull(entity.getIdSeller(), "idSeller is null");
+		AssertUtil.argIsNotNull(entity.getNameSeller(), "nameSeller is null");
 		AssertUtil.argIsNotNull(entity.getQuantity(), "quantity is null");
 		AssertUtil.argIsNotNull(entity.getPrice(), "price is null");
 		AssertUtil.argIsNotNull(entity.getTime(), "time is null");

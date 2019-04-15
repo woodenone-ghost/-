@@ -25,7 +25,7 @@ public class CommodityDAO extends BaseDAO<Commodity, CommodityExample, Commodity
 		AssertUtil.strIsNotBlank(entity.getName(), "name is null");
 		AssertUtil.argIsNotNull(entity.getPrice(), "price is null");
 		AssertUtil.strIsNotBlank(entity.getCategory(), "category is null");
-		AssertUtil.argIsNotNull(entity.getBusiness(), "business is null");
+		AssertUtil.argIsNotNull(entity.getBusinessName(), "businessName is null");
 		this.getMapper().insert(entity);
 	}
 
@@ -51,7 +51,7 @@ public class CommodityDAO extends BaseDAO<Commodity, CommodityExample, Commodity
 		AssertUtil.strIsNotBlank(entity.getName(), "name is null");
 		AssertUtil.argIsNotNull(entity.getPrice(), "price is null");
 		AssertUtil.strIsNotBlank(entity.getCategory(), "category is null");
-		AssertUtil.argIsNotNull(entity.getBusiness(), "business is null");
+		AssertUtil.argIsNotNull(entity.getBusinessName(), "businessName is null");
 		AssertUtil.argIsNotNull(entity.getSalesVolume(), "salesVolume is null");
 		AssertUtil.strIsNotBlank(entity.getEvaluation(), "evaluation is null");
 		this.getMapper().updateByPrimaryKeySelective(entity);
@@ -94,9 +94,9 @@ public class CommodityDAO extends BaseDAO<Commodity, CommodityExample, Commodity
 		if(StringUtils.isNotBlank(category)) {
 			criteria.andCategoryLike("%"+category+"%");
 		}
-		String business=qryParams.get("business");
-		if(StringUtils.isNotBlank(business)) {
-			criteria.andBusinessEqualTo(Integer.valueOf(business));
+		String businessName=qryParams.get("businessName");
+		if(StringUtils.isNotBlank(businessName)) {
+			criteria.andBusinessNameLike("%"+businessName+"%");
 		}
 		return example;
 	}

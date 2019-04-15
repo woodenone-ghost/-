@@ -10,9 +10,9 @@
 	<@editForm id="${entityAbbr}Edit" action="${basePath}/edit/submit">
 		<@editHidden fId="id" type="hidden"/>
 		<@detail fId="id" />
-		<@edit fId="idBuyer" />
+		<@edit fId="accountBuyer" />
 		<@edit fId="idCommodity" />
-		<@edit fId="idSeller" />
+		<@edit fId="nameSeller" />
 		<@edit fId="quantity" />
 		<@edit fId="price" />
 		<@edit fId="time" />
@@ -30,9 +30,9 @@
 		$editForm.validate({
 			rules:{
 				id: {digits:true},	
-				idBuyer: {digits:true},
+				accountBuyer: {maxlength:32},
 				idCommodity: {digits:true},	
-				idSeller: {digits:true},						
+				nameSeller: {maxlength:32},						
 				quantity: {digits:true},	
 				price: {digits:true},			
 			},

@@ -6,9 +6,9 @@
 
 <@modalShow title="详情">
 	<@detail fId="id" />
-	<@detail fId="idBuyer" />
+	<@detail fId="accountBuyer" />
 	<@detail fId="idCommodity" />
-	<@detail fId="idSeller" />
+	<@detail fId="nameSeller" />
 	<@detail fId="quantity" />
 	<@detail fId="price" />
 	<@detail fId="time" />

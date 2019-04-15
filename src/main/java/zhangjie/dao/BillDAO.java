@@ -22,9 +22,9 @@ public class BillDAO extends BaseDAO<Bill, BillExample, BillMapper> {
 	 */
 	public void add(Bill entity) {
 		AssertUtil.argIsNotNull(entity, "entity is null");
-		AssertUtil.argIsNotNull(entity.getIdBuyer(), "idBuyer is null");
+		AssertUtil.argIsNotNull(entity.getAccountBuyer(), "accountBuyer is null");
 		AssertUtil.argIsNotNull(entity.getIdCommodity(), "idCommodity is null");
-		AssertUtil.argIsNotNull(entity.getIdSeller(), "idSeller is null");
+		AssertUtil.argIsNotNull(entity.getNameSeller(), "nameSeller is null");
 		AssertUtil.argIsNotNull(entity.getQuantity(), "quantity is null");
 		AssertUtil.argIsNotNull(entity.getPrice(), "price is null");
 		AssertUtil.argIsNotNull(entity.getTime(), "time is null");
@@ -50,9 +50,9 @@ public class BillDAO extends BaseDAO<Bill, BillExample, BillMapper> {
 	public void update(Bill entity) {
 		AssertUtil.argIsNotNull(entity, "entity is null");
 		AssertUtil.argIsNotNull(entity.getId(), "id is null");
-		AssertUtil.argIsNotNull(entity.getIdBuyer(), "idBuyer is null");
+		AssertUtil.argIsNotNull(entity.getAccountBuyer(), "accountBuyer is null");
 		AssertUtil.argIsNotNull(entity.getIdCommodity(), "idCommodity is null");
-		AssertUtil.argIsNotNull(entity.getIdSeller(), "idSeller is null");
+		AssertUtil.argIsNotNull(entity.getNameSeller(), "nameSeller is null");
 		AssertUtil.argIsNotNull(entity.getQuantity(), "quantity is null");
 		AssertUtil.argIsNotNull(entity.getPrice(), "price is null");
 		AssertUtil.argIsNotNull(entity.getTime(), "time is null");
@@ -89,17 +89,17 @@ public class BillDAO extends BaseDAO<Bill, BillExample, BillMapper> {
 		if(StringUtils.isNotBlank(id)) {
 			criteria.andIdEqualTo(Integer.valueOf(id));
 		}
-		String idBuyer=qryParams.get("idBuyer");
-		if(StringUtils.isNotBlank(idBuyer)) {
-			criteria.andIdBuyerEqualTo(Integer.valueOf(idBuyer));
+		String accountBuyer=qryParams.get("accountBuyer");
+		if(StringUtils.isNotBlank(accountBuyer)) {
+			criteria.andAccountBuyerLike("%"+accountBuyer+"%");
 		}
 		String idCommodity=qryParams.get("idCommodity");
 		if(StringUtils.isNotBlank(idCommodity)) {
 			criteria.andIdCommodityEqualTo(Integer.valueOf(idCommodity));
 		}
-		String idSeller=qryParams.get("idSeller");
-		if(StringUtils.isNotBlank(idSeller)) {
-			criteria.andIdSellerEqualTo(Integer.valueOf(idSeller));
+		String nameSeller=qryParams.get("nameSeller");
+		if(StringUtils.isNotBlank(nameSeller)) {
+			criteria.andNameSellerLike("%"+nameSeller+"%");
 		}
 		String time=qryParams.get("time");
 		if(StringUtils.isNotBlank(time)) {
