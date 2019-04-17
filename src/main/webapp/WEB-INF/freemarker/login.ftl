@@ -10,7 +10,7 @@
 		        <div class="form-group">
 		            <label for="inputAccount" class="col-lg-4 control-label">登录账户</label>
 		            <div class="col-lg-12">    
-		                <input type="text" id="account" name="account" class="form-control" placeholder="登录账户">
+		                <input type="text" id="account" name="account" class="form-control" placeholder="登录账户" autofocus="autofocus">
 		            </div>
 		        </div>
 		        <div class="form-group">

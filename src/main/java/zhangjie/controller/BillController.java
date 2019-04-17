@@ -91,7 +91,7 @@ public class BillController extends BaseController {
 		AssertUtil.argIsNotNull(id, "id is null");
 		AssertUtil.argIsNotNull(entity.getAccountBuyer(), "accountBuyer is null");
 		AssertUtil.argIsNotNull(entity.getIdCommodity(), "idCommodity is null");
-		AssertUtil.argIsNotNull(entity.getNameSeller(), "nameSeller is null");
+		AssertUtil.argIsNotNull(entity.getAccountSeller(), "accountSeller is null");
 		AssertUtil.argIsNotNull(entity.getQuantity(), "quantity is null");
 		AssertUtil.argIsNotNull(entity.getPrice(), "price is null");
 		AssertUtil.argIsNotNull(entity.getTime(), "time is null");

@@ -55,7 +55,7 @@ public class SessionChecker extends HandlerInterceptorAdapter {
 						if (!buyerPermissionSet.contains(reqPath)) {// 请求的url不在权限内
 							response.sendRedirect(request.getContextPath() + "/noPermission");
 						}
-					} else if (identity.equals("sell")) {// 身份为卖家
+					} else if (identity.equals("seller")) {// 身份为卖家
 						if (!sellerPermissionSet.contains(reqPath)) {
 							response.sendRedirect(request.getContextPath() + "/noPermission");
 						}
@@ -63,6 +63,8 @@ public class SessionChecker extends HandlerInterceptorAdapter {
 						if (!managerPermissionSet.contains(reqPath)) {
 							response.sendRedirect(request.getContextPath() + "/noPermission");
 						}
+					}else {
+						response.sendRedirect(request.getContextPath() + "/noPermission");
 					}
 
 				}

@@ -24,9 +24,9 @@ public class BillDAO extends BaseDAO<Bill, BillExample, BillMapper> {
 		AssertUtil.argIsNotNull(entity, "entity is null");
 		AssertUtil.argIsNotNull(entity.getAccountBuyer(), "accountBuyer is null");
 		AssertUtil.argIsNotNull(entity.getIdCommodity(), "idCommodity is null");
-		AssertUtil.argIsNotNull(entity.getNameSeller(), "nameSeller is null");
+		AssertUtil.argIsNotNull(entity.getAccountSeller(), "accountSeller is null");
 		AssertUtil.argIsNotNull(entity.getQuantity(), "quantity is null");
-		AssertUtil.argIsNotNull(entity.getPrice(), "price is null");
+		AssertUtil.strIsNotBlank(entity.getPrice(), "price is null");
 		AssertUtil.argIsNotNull(entity.getTime(), "time is null");
 		AssertUtil.strIsNotBlank(entity.getState(), "state is null");
 		this.getMapper().insert(entity);
@@ -52,9 +52,9 @@ public class BillDAO extends BaseDAO<Bill, BillExample, BillMapper> {
 		AssertUtil.argIsNotNull(entity.getId(), "id is null");
 		AssertUtil.argIsNotNull(entity.getAccountBuyer(), "accountBuyer is null");
 		AssertUtil.argIsNotNull(entity.getIdCommodity(), "idCommodity is null");
-		AssertUtil.argIsNotNull(entity.getNameSeller(), "nameSeller is null");
+		AssertUtil.argIsNotNull(entity.getAccountSeller(), "accountSeller is null");
 		AssertUtil.argIsNotNull(entity.getQuantity(), "quantity is null");
-		AssertUtil.argIsNotNull(entity.getPrice(), "price is null");
+		AssertUtil.strIsNotBlank(entity.getPrice(), "price is null");
 		AssertUtil.argIsNotNull(entity.getTime(), "time is null");
 		AssertUtil.strIsNotBlank(entity.getState(), "state is null");
 		this.getMapper().updateByPrimaryKeySelective(entity);
@@ -97,9 +97,9 @@ public class BillDAO extends BaseDAO<Bill, BillExample, BillMapper> {
 		if(StringUtils.isNotBlank(idCommodity)) {
 			criteria.andIdCommodityEqualTo(Integer.valueOf(idCommodity));
 		}
-		String nameSeller=qryParams.get("nameSeller");
-		if(StringUtils.isNotBlank(nameSeller)) {
-			criteria.andNameSellerLike("%"+nameSeller+"%");
+		String accountSeller=qryParams.get("accountSeller");
+		if(StringUtils.isNotBlank(accountSeller)) {
+			criteria.andAccountSellerLike("%"+accountSeller+"%");
 		}
 		String time=qryParams.get("time");
 		if(StringUtils.isNotBlank(time)) {

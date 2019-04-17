@@ -13,7 +13,7 @@
 					<nav class="navbar bg-dark navbar-dark h-100">
 	  					<ul class="navbar-nav" style="position: relative;left: 30px;bottom: 300px;">
 	    					<li class="nav-item">			
-	      						<a class="nav-link " href="${ctx}/commodity/">增 加 商 品</a>
+	      						<a class="nav-link " href="${ctx}/commodity/add">增 加 商 品</a>
 	    					</li>
 	    					<li class="nav-item">
 	      						<a class="nav-link" href="${ctx}/seller/manage">查 询 商 品</a>

@@ -66,6 +66,9 @@
 	<bean id="jsonConverter"
 		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"></bean>
 
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
@@ -75,8 +78,10 @@
 					value="/,/login,/login/submit,/loginout,/manager/login,/register,/register/submit,/register/identity,/register/buyer/submit,/register/seller/submit,/noPermission"></property>
 				<property name="managerPermissions"
 					value="/buyer/manage,/buyer/qry,/buyer/edit,/buyer/edit/submit,/buyer/delete,/buyer/detail,/seller/manage,/seller/qry,/seller/edit,/seller/edit/submit,/seller/delete,/seller/detail,/changePassword,/changePassword/submit"></property>
-				<property name="buyerPermissions" value="/changePassword,/changePassword/submit,/userInformation,/userInformation/submit"></property>
-				<property name="sellerPermissions" value="/changePassword,/changePassword/submit,/userInformation,/userInformation/submit"></property>
+				<property name="buyerPermissions"
+					value="/changePassword,/changePassword/submit,/userInformation,/userInformation/submit"></property>
+				<property name="sellerPermissions"
+					value="/changePassword,/changePassword/submit,/userInformation,/userInformation/submit,/bill/todayBills,/commodity/add,/commodity/add/submit"></property>
 			</bean>
 		</mvc:interceptor>
 		<mvc:interceptor>

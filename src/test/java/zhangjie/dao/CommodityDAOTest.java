@@ -16,12 +16,12 @@ public class CommodityDAOTest extends BaseTest {
 		for (int i = 0; i <= 25; i++) {
 			entity.setIcon("icon_"+i);
 			entity.setName("name_"+i);
-			entity.setPrice(1.23+i);
+		//	entity.setPrice(1.23+i);
 			entity.setCategory("category_"+i);
 			entity.setBusinessName("张杰公司");
 			entity.setCharacteristic("characteristic_"+i);
 			entity.setSalesVolume(0);
-			entity.setEvaluation("0");
+		//	entity.setEvaluation("0");
 			dao.add(entity);
 		}
 	}

@@ -23,9 +23,13 @@ public class CommodityDAO extends BaseDAO<Commodity, CommodityExample, Commodity
 		AssertUtil.argIsNotNull(entity, "entity is null");
 		AssertUtil.strIsNotBlank(entity.getIcon(), "icon is null");
 		AssertUtil.strIsNotBlank(entity.getName(), "name is null");
-		AssertUtil.argIsNotNull(entity.getPrice(), "price is null");
+		AssertUtil.strIsNotBlank(entity.getPrice(), "price is null");
 		AssertUtil.strIsNotBlank(entity.getCategory(), "category is null");
 		AssertUtil.argIsNotNull(entity.getBusinessName(), "businessName is null");
+		AssertUtil.argIsNotNull(entity.getCharacteristic(), "characteristic is null");
+		entity.setSalesVolume(0);
+		entity.setEvaluationPrice("0");
+		entity.setEvaluationService("0");
 		this.getMapper().insert(entity);
 	}
 
@@ -49,11 +53,13 @@ public class CommodityDAO extends BaseDAO<Commodity, CommodityExample, Commodity
 		AssertUtil.argIsNotNull(entity.getId(), "id is null");
 		AssertUtil.strIsNotBlank(entity.getIcon(), "icon is null");
 		AssertUtil.strIsNotBlank(entity.getName(), "name is null");
-		AssertUtil.argIsNotNull(entity.getPrice(), "price is null");
+		AssertUtil.strIsNotBlank(entity.getPrice(), "price is null");
 		AssertUtil.strIsNotBlank(entity.getCategory(), "category is null");
 		AssertUtil.argIsNotNull(entity.getBusinessName(), "businessName is null");
+		AssertUtil.argIsNotNull(entity.getCharacteristic(), "characteristic is null");
 		AssertUtil.argIsNotNull(entity.getSalesVolume(), "salesVolume is null");
-		AssertUtil.strIsNotBlank(entity.getEvaluation(), "evaluation is null");
+		AssertUtil.strIsNotBlank(entity.getEvaluationPrice(), "evaluationPrice is null");
+		AssertUtil.strIsNotBlank(entity.getEvaluationService(), "evaluationService is null");
 		this.getMapper().updateByPrimaryKeySelective(entity);
 	}
 

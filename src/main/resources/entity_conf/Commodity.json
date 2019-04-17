@@ -35,8 +35,12 @@
             "fNm": "总销量"
         },
         {
-            "fId": "evaluation",
-            "fNm": "平均评价"
+            "fId": "evaluationPrice",
+            "fNm": "平均价格评价"
+        },
+        {
+            "fId": "evaluationService",
+            "fNm": "平均服务评价"
         }
     ]
 }

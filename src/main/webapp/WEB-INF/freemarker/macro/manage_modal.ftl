@@ -21,7 +21,7 @@
 </#macro>
 
 <#macro editForm id action style="position: relative;right: 80px;top: 86px;">
-    <form id="${id}Form" class="form-inline" action="${action}" method="POST">        
+    <form id="${id}Form" class="form-inline" action="${action}" method="POST" enctype="multipart/form-data">        
         <#nested />	
         <button id="editSubmitButton" type="submit" class="btn btn-success" style="${style}">提 交</button>		
     </form>
