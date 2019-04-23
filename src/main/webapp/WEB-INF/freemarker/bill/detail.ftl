@@ -8,10 +8,15 @@
 	<@detail fId="id" />
 	<@detail fId="accountBuyer" />
 	<@detail fId="idCommodity" />
-	<@detail fId="nameSeller" />
+	<@detail fId="accountSeller" />
 	<@detail fId="quantity" />
 	<@detail fId="price" />
-	<@detail fId="time" />
+    <div class="col-lg-11 form-inline" style="margin-bottom: 15px;margin-top: 15px;">
+    	<label for="timeZ" class="w-25">${entityConf.fields["time"].fName}:</label>
+  		<input type="text" class="form-control w-50" id="timeZ" name="timeZ" disabled="disabled" value="${entity["time"]?string('yyyy-MM-dd')}"/>
+  	</div>
 	<@detail fId="state" />
+	<@detail fId="evaluationPrice" />
+	<@detail fId="evaluationService" />
 	<@detail fId="evaluation" />
 </@modalShow>

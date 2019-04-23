@@ -77,11 +77,17 @@
 				<property name="ignoredUrls"
 					value="/,/login,/login/submit,/loginout,/manager/login,/register,/register/submit,/register/identity,/register/buyer/submit,/register/seller/submit,/noPermission"></property>
 				<property name="managerPermissions"
-					value="/buyer/manage,/buyer/qry,/buyer/edit,/buyer/edit/submit,/buyer/delete,/buyer/detail,/seller/manage,/seller/qry,/seller/edit,/seller/edit/submit,/seller/delete,/seller/detail,/changePassword,/changePassword/submit"></property>
+					value="/changePassword,/changePassword/submit,
+					/buyer/manage,/buyer/qry,/buyer/edit,/buyer/edit/submit,/buyer/delete,/buyer/detail,
+					/seller/manage,/seller/qry,/seller/edit,/seller/edit/submit,/seller/delete,/seller/detail,
+					/commodity/manage,/commodity/qry,/commodity/edit,/commodity/edit/submit,/commodity/delete,/commodity/detail,
+					/bill/manage,/bill/qry,/bill/edit,/bill/edit/submit,/bill/delete,/bill/detail"></property>
 				<property name="buyerPermissions"
 					value="/changePassword,/changePassword/submit,/userInformation,/userInformation/submit"></property>
 				<property name="sellerPermissions"
-					value="/changePassword,/changePassword/submit,/userInformation,/userInformation/submit,/bill/todayBills,/commodity/add,/commodity/add/submit"></property>
+					value="/changePassword,/changePassword/submit,/userInformation,/userInformation/submit,
+					/bill/todayBills,/bill/add,
+					/commodity/add,/commodity/add/submit,/commodity/sellerManage,/commodity/qry,/commodity/edit,/commodity/edit/submit,/commodity/delete,/commodity/detail"></property>
 			</bean>
 		</mvc:interceptor>
 		<mvc:interceptor>

@@ -7,6 +7,9 @@
 <@html>
 	<@page_body>
 		<#assign user=Session.SESSION_KEY_USER />
+		<div class="jumbotron">
+    		<h2 style="position: relative;left: 65px;">修改个人资料</h2> 
+  		</div>
 		<@editForm id="Edit" action="${ctx}/userInformation/submit" style="position: relative;right: 820px;top: 50px;">
 			<#if user.identity=="buyer">
 				<@editHidden fId="idBuyer" type="hidden"/>

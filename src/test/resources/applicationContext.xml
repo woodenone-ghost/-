@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<xml-body>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
@@ -20,7 +21,7 @@
 
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName">
+		<property name="driverClassName"> 
 			<value>com.mysql.cj.jdbc.Driver</value>
 		</property>
 		<property name="url">
@@ -46,3 +47,4 @@
 
 	<bean class="zhangjie.util.ApplicationContextUtil"></bean>
 </beans>
+</xml-body>

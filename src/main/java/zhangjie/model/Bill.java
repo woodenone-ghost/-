@@ -2,6 +2,10 @@ package zhangjie.model;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Bill {
     /**
      *
@@ -64,6 +68,8 @@ public class Bill {
      *
      * @mbg.generated Wed Apr 17 10:37:38 CST 2019
      */
+    @DateTimeFormat(pattern="yyyy-MM-dd")//接受前台的时间格式 传到后台的格式
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")//作用：后台的时间 格式化 发送到前台
     private Date time;
 
     /**

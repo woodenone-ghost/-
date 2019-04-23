@@ -15,9 +15,14 @@
             <script>
             	_ctx="${ctx}";
             </script>
+            <style>
+				.error{
+  					color:red;
+				}
+			</style>
         </head>
 
-        <body>
+        <body style="width:1534px;">
         	<#nested />
         </body>
     </html>

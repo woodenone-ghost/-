@@ -86,23 +86,27 @@ public class CommodityDAO extends BaseDAO<Commodity, CommodityExample, Commodity
 	 */
 	protected CommodityExample buildExample(Map<String, String> qryParams) {
 		// TODO Auto-generated method stub
-		CommodityExample example=new CommodityExample();
-		Criteria criteria=example.createCriteria();
-		String id=qryParams.get("id");
-		if(StringUtils.isNotBlank(id)) {
+		CommodityExample example = new CommodityExample();
+		Criteria criteria = example.createCriteria();
+		String id = qryParams.get("id");
+		if (StringUtils.isNotBlank(id)) {
 			criteria.andIdEqualTo(Integer.valueOf(id));
 		}
-		String name=qryParams.get("name");
-		if(StringUtils.isNotBlank(name)) {
-			criteria.andNameLike("%"+name+"%");
+		String name = qryParams.get("name");
+		if (StringUtils.isNotBlank(name)) {
+			criteria.andNameLike("%" + name + "%");
 		}
-		String category=qryParams.get("category");
-		if(StringUtils.isNotBlank(category)) {
-			criteria.andCategoryLike("%"+category+"%");
+		String category = qryParams.get("category");
+		if (StringUtils.isNotBlank(category)) {
+			criteria.andCategoryLike("%" + category + "%");
 		}
-		String businessName=qryParams.get("businessName");
-		if(StringUtils.isNotBlank(businessName)) {
-			criteria.andBusinessNameLike("%"+businessName+"%");
+		String businessName = qryParams.get("businessName");
+		if (StringUtils.isNotBlank(businessName)) {
+			criteria.andBusinessNameLike("%" + businessName + "%");
+		}
+		String businessNameZ = qryParams.get("businessNameZ");// 专门用来卖家查询自己的账单，所以账号必须完成正确
+		if (StringUtils.isNotBlank(businessNameZ)) {
+			criteria.andBusinessNameEqualTo(businessNameZ);
 		}
 		return example;
 	}

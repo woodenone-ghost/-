@@ -16,7 +16,7 @@
 		<#nested />
 	</div>
     <div class="modal-footer">  	
-    	<button type="button" class="btn btn-warning" data-dismiss="modal">关闭</button>
+    	<button type="button" id="closeButton" class="btn btn-warning" data-dismiss="modal">关闭</button>
     </div>
 </#macro>
 
@@ -41,10 +41,8 @@
   	</div>
 </#macro>
 
-<#macro editHidden fId colClass="col-lg-11" type="text">
-    <div class="${colClass} form-inline" style="margin-bottom: 15px;margin-top: 15px;">
+<#macro editHidden fId type="text">
   		<input type="${type}" class="form-control w-50" id="${fId}" name="${fId}" value="${entity[fId]}"/>
-  	</div>
 </#macro>
 
 <#macro add fId colClass="col-lg-11" type="text">

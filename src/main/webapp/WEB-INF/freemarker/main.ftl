@@ -16,10 +16,10 @@
 	      						<a class="nav-link " href="${ctx}/commodity/add">增 加 商 品</a>
 	    					</li>
 	    					<li class="nav-item">
-	      						<a class="nav-link" href="${ctx}/seller/manage">查 询 商 品</a>
+	      						<a class="nav-link" href="${ctx}/commodity/sellerManage">管 理 商 品</a>
 	    					</li>
 	    					<li class="nav-item">
-	      						<a class="nav-link" href="#">查 询 账 单</a>
+	      						<a class="nav-link" href="#">管 理 账 单</a>
 	    					</li>
 	    					<li class="nav-item">
 	      						<a class="nav-link" href="#">图 表 查 看</a>

@@ -38,7 +38,7 @@
 					<@qryInput fId="id" colClass="col-lg-6" />
 					<@qryInput fId="accountBuyer" colClass="col-lg-6" />
 					<@qryInput fId="idCommodity" colClass="col-lg-6" />
-					<@qryInput fId="nameSeller" colClass="col-lg-6" />
+					<@qryInput fId="accountSeller" colClass="col-lg-6" />
 				</@qryForm>
 				
 				<div style="position: relative;top: 40px;">
@@ -57,7 +57,7 @@
 				  	  <th data-field="id">${entityConf.fields["id"].fName}</th>
 				      <th data-field="accountBuyer">${entityConf.fields["accountBuyer"].fName}</th>
 				      <th data-field="idCommodity">${entityConf.fields["idCommodity"].fName}</th>
-				      <th data-field="nameSeller">${entityConf.fields["nameSeller"].fName}</th>
+				      <th data-field="accountSeller">${entityConf.fields["accountSeller"].fName}</th>
 				      <th data-field="price">${entityConf.fields["price"].fName}</th>
 				      <th data-field="time">${entityConf.fields["time"].fName}</th>
 				      <th data-field="state">${entityConf.fields["state"].fName}</th>
@@ -80,7 +80,7 @@
 			params._QRY_id = $("#id").val()
     		params._QRY_accountBuyer = $("#accountBuyer").val()
     		params._QRY_idCommodity = $("#idCommodity").val()
-    		params._QRY_nameSeller = $("#nameSeller").val()
+    		params._QRY_accountSeller = $("#accountSeller").val()
     		return params
   		}
   		
@@ -88,10 +88,10 @@
     	 	$.get('${basePath}/qry', {
       			pageNumber: number,
       			pageSize: size,
-      			_QRY_id = $("#id").val(),
+      			_QRY_id : $("#id").val(),
       			_QRY_accountBuyer : $("#accountBuyer").val(),
       			_QRY_idCommodity : $("#idCommodity").val(),
-      			_QRY_nameSeller : $("#nameSeller").val()
+      			_QRY_accountSeller : $("#accountSeller").val()
     		}, function (data) {
     		var $qryTable=$("#${entityAbbr}QryTable");
       		$qryTable.bootstrapTable("load", data.data.pager)
@@ -113,7 +113,7 @@
 					_QRY_id: {digits:true},
 					_QRY_accountBuyer: {maxlength:32},	
 					_QRY_idCommodity: {digits:true},
-					_QRY_nameSeller: {maxlength:32}
+					_QRY_accountSeller: {maxlength:32}
 				},
 	        	submitHandler:function(form){
 	            	$("#qryButton").attr("disabled","disabled");

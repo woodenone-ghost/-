@@ -15,21 +15,18 @@
   			<div class="col-lg-2"> <!-- 左侧导航栏 -->
 				<nav class="navbar bg-dark navbar-dark h-100">
   					<ul class="navbar-nav" style="position: relative;left: 30px;bottom: 300px;">
-    					<li class="nav-item">			
-      						<a class="nav-link " href="${ctx}/buyer/manage">买 家 管 理</a>
-    					</li>
-    					<li class="nav-item">
-      						<a class="nav-link" href="${ctx}/seller/manage">卖 家 管 理</a>
-    					</li>
-    					<li class="nav-item">
-      						<a class="nav-link" href="${ctx}/commodity/manage">商 品 管 理</a>
-    					</li>
-    					<li class="nav-item">
-      						<a class="nav-link" href="${ctx}/bill/manage">账 单 管 理</a>
-    					</li>
-    					<li class="nav-item">
-      						<a class="nav-link" href="#">图 表 查 看</a>
-    					</li>    					
+	    					<li class="nav-item">			
+	      						<a class="nav-link " href="${ctx}/commodity/add">增 加 商 品</a>
+	    					</li>
+	    					<li class="nav-item">
+	      						<a class="nav-link" href="${ctx}/commodity/sellerManage">管 理 商 品</a>
+	    					</li>
+	    					<li class="nav-item">
+	      						<a class="nav-link" href="#">管 理 账 单</a>
+	    					</li>
+	    					<li class="nav-item">
+	      						<a class="nav-link" href="#">图 表 查 看</a>
+	    					</li>    					
   					</ul>
 				</nav>
 			</div>  			
@@ -37,8 +34,21 @@
 				<@qryForm id="${entityAbbr}Qry" action="${basePath}/qry">
 					<@qryInput fId="id" colClass="col-lg-6" />
 					<@qryInput fId="name" colClass="col-lg-6" />
-					<@qryInput fId="category" colClass="col-lg-6" />
-					<@qryInput fId="businessName" colClass="col-lg-6" />
+					<div class="col-lg-6 form-inline" style="margin-bottom: 15px;margin-top: 15px;">
+    					<label for="category" class="w-25">${entityConf.fields["category"].fName}:</label>
+				        <select class="form-control" id="category" name="_QRY_category" style="width: 203px;">
+				        	<option></option>
+					        <option>助洁-购物</option>
+					        <option>助洁-打扫</option>
+					        <option>助餐-上门助餐</option>
+					        <option>助餐-老年食堂</option>
+					        <option>助医-护理保健</option>
+					        <option>助医-上门诊治</option>
+					        <option>康乐服务-聊天解闷</option>
+					        <option>康乐服务-文化娱乐</option>
+					        <option>康乐服务-法律帮助</option>
+				        </select>    					
+  					</div>
 				</@qryForm>
 				
 				<div style="position: relative;top: 40px;">
@@ -80,7 +90,6 @@
 			params._QRY_id = $("#id").val()
     		params._QRY_name = $("#name").val()
     		params._QRY_category = $("#category").val()
-    		params._QRY_businessName = $("#businessName").val()
     		return params
   		}
   		
@@ -91,7 +100,6 @@
       			_QRY_id : $("#id").val(),
       			_QRY_name : $("#name").val(),
       			_QRY_category : $("#category").val(),
-      			_QRY_businessName : $("#businessName").val()
     		}, function (data) {
     		var $qryTable=$("#${entityAbbr}QryTable");
       		$qryTable.bootstrapTable("load", data.data.pager)
@@ -112,8 +120,7 @@
 				rules:{
 					_QRY_id: {digits:true},
 					_QRY_name: {maxlength:32},	
-					_QRY_category: {maxlength:64},
-					_QRY_businessName: {maxlength:32}
+					_QRY_category: {maxlength:16}
 				},
 	        	submitHandler:function(form){
 	            	$("#qryButton").attr("disabled","disabled");
@@ -180,10 +187,8 @@
 					return;
 				}
                 var url="${basePath}/detail?id="+rows[0].id;
-                window.open(url);
+				window.open(url);
             });			
-			
-			    
 		});
 		
 	

@@ -22,12 +22,12 @@
     			<label for="price" class="w-25">商品价格:</label>
   				<input type="text" class="form-control w-25" id="price" name="price" />&nbsp;
   				<select name="danwei" style="height:37px;">
- 					<option selected="selected">每个</option>
- 					<option>每次</option>
- 					<option>每小时</option>
- 					<option>每天</option>
- 					<option>每周</option>
- 					<option>每月</option>
+ 					<option selected="selected">元/每个</option>
+ 					<option>元/每次</option>
+ 					<option>元/每小时</option>
+ 					<option>元/每天</option>
+ 					<option>元/每周</option>
+ 					<option>元/每月</option>
 				</select>
   			</div>  			
   			<div class="col-lg-7" style="margin-bottom: 15px;margin-top: 15px;">
@@ -68,4 +68,50 @@
 	</@page_body>
 	
 	<@js_include />
+	
+	<script>
+		jQuery.validator.addMethod("money", function(value, element) {
+		    var money =  /(^[1-9]\d*(\.\d{1,2})?$)|(^0(\.\d{1,2})?$)/
+		    return this.optional(element) || (money.test(value));
+		}, "请输入正确的价格");
+	
+		$(document).ready(function(){
+			var $form=$("#addCommodityForm");
+	
+			<!-- 格式检验代码 -->
+			$form.validate({
+				rules:{
+					icon: {
+						required:true},					
+					name: {
+						required:true,
+						maxlength:32},
+					price:{
+						required:true,
+						money:true},
+					category: {
+						required:true},		
+					characteristic: {
+						required:true},					
+				},
+		       	submitHandler:function(form){
+		           	$("#submitButton").attr("disabled","disabled");
+		           	$(form).ajaxSubmit({
+		               	type:"post",
+	                    dateType:"json",
+		                success:function(resp){
+		                	$.dealAjaxResp(resp,function(data){
+		                       	$("#submitButton").removeAttr("disabled");
+		                        alert("添加商品成功！");
+		                        $.jumpTo("${ctx}/login");
+		                    });
+		                }
+		            });
+	         	},
+	         	errorPlacement:function(error,element){
+		        	error.appendTo(element.parent());
+		        }
+	    	});		
+		});	
+	</script>
 </@html>

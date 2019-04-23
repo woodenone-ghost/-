@@ -11,18 +11,21 @@
 <@html>
 	<@page_head />
 	<@page_body>
-		<div class="row" style="height:650px;">
+		<div class="row" style="height:830px;">
   			<div class="col-lg-2"> <!-- 左侧导航栏 -->
-				<nav class="navbar bg-secondary navbar-dark h-100">
-  					<ul class="navbar-nav" style="position: relative;left: 50px;bottom: 200px;">
-    					<li class="nav-item">
+				<nav class="navbar bg-dark navbar-dark h-100">
+  					<ul class="navbar-nav" style="position: relative;left: 30px;bottom: 300px;">
+    					<li class="nav-item">			
       						<a class="nav-link " href="${ctx}/buyer/manage">买 家 管 理</a>
     					</li>
     					<li class="nav-item">
       						<a class="nav-link" href="${ctx}/seller/manage">卖 家 管 理</a>
     					</li>
     					<li class="nav-item">
-      						<a class="nav-link" href="#">账 单 管 理</a>
+      						<a class="nav-link" href="${ctx}/commodity/manage">商 品 管 理</a>
+    					</li>
+    					<li class="nav-item">
+      						<a class="nav-link" href="${ctx}/bill/manage">账 单 管 理</a>
     					</li>
     					<li class="nav-item">
       						<a class="nav-link" href="#">图 表 查 看</a>

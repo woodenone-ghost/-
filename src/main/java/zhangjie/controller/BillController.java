@@ -17,9 +17,11 @@ import zhangjie.bo.EntityTransformer;
 import zhangjie.cache.EntityConfigCache;
 import zhangjie.constants.Constants;
 import zhangjie.dao.BillDAO;
+import zhangjie.dao.CommodityDAO;
 import zhangjie.entity.AjaxResult;
 import zhangjie.entity.Pager;
 import zhangjie.model.Bill;
+import zhangjie.model.Commodity;
 import zhangjie.util.AssertUtil;
 import zhangjie.util.BeanUtil;
 
@@ -38,6 +40,8 @@ public class BillController extends BaseController {
 
 	@Autowired
 	private BillDAO billDAO;
+	@Autowired
+	private CommodityDAO commodityDAO;
 
 	@RequestMapping(value = "/manage", method = RequestMethod.GET)
 	public String manage(Model model) {
@@ -81,6 +85,36 @@ public class BillController extends BaseController {
 		model.addAttribute(Constants.ENTITY_RESULT, entity);
 		model.addAttribute(Constants.ENTITY_CONF, EntityConfigCache.get(Constants.ENTITY_BILL));
 		return "bill/edit";
+	}
+	
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	public String add(Model model, Integer id,int quantity) {
+		// 字段检查
+		AssertUtil.argIsNotNull(id, "id is null");
+		AssertUtil.argIsNotNull(quantity, "quantity is null");
+		
+		// 从数据库查询记录
+		Commodity commodity=commodityDAO.selectByPrimaryKey(id);
+		AssertUtil.argIsNotNull(commodity, "commodity is null");
+		
+		Bill entity=new Bill();
+		entity.setAccountBuyer(this.getSessionUser().getAccount());
+		entity.setIdCommodity(id);
+		entity.setAccountSeller(commodity.getBusinessName());
+		entity.setQuantity(quantity);
+		//处理价格
+		String[] str = commodity.getPrice().split("/");
+		int price=Integer.parseInt(str[0].substring(0, str[0].length() - 1))*quantity;
+		entity.setPrice(String.valueOf(price)+"元");
+		entity.setTime(new Date());
+		entity.setState("未评价");
+		
+		billDAO.add(entity);
+		
+		// 放入model，传入界面
+		model.addAttribute(Constants.ENTITY_RESULT, entity);
+		model.addAttribute(Constants.ENTITY_CONF, EntityConfigCache.get(Constants.ENTITY_BILL));
+		return "main";
 	}
 
 	@RequestMapping(value = "/edit/submit", method = RequestMethod.POST)

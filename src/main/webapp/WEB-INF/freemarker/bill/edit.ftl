@@ -12,11 +12,12 @@
 		<@detail fId="id" />
 		<@edit fId="accountBuyer" />
 		<@edit fId="idCommodity" />
-		<@edit fId="nameSeller" />
+		<@edit fId="accountSeller" />
 		<@edit fId="quantity" />
 		<@edit fId="price" />
-		<@edit fId="time" />
 		<@edit fId="state" />
+		<@edit fId="evaluationPrice" />
+		<@edit fId="evaluationService" />
 		<@edit fId="evaluation" />
 	</@editForm>
 </@modalShow>

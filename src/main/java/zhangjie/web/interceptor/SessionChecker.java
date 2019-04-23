@@ -24,6 +24,7 @@ public class SessionChecker extends HandlerInterceptorAdapter {
 	private Set<String> buyerPermissionSet = new HashSet<String>();// 买家权限url
 	private Set<String> sellerPermissionSet = new HashSet<String>();// 卖家权限url
 	private static final String EXP_RESP = "{\"code\":\"99\"}";
+	private static final String errorMessage = "{\"code\":\"ZZ\",\"errorMessage\":\"操作失败！\"}";
 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
@@ -37,7 +38,7 @@ public class SessionChecker extends HandlerInterceptorAdapter {
 			if (!ignoredURLSet.contains(reqPath)) {
 				if (session.getAttribute(Constants.SESSION_KEY_USER) == null) {
 					if (ajaxReq) {
-						response.setContentType("application/json);charset=UTF-8");
+						response.setContentType("application/json;charset=UTF-8");
 						PrintWriter wr = response.getWriter();
 						wr.write(EXP_RESP);
 						wr.flush();
@@ -53,18 +54,43 @@ public class SessionChecker extends HandlerInterceptorAdapter {
 					String identity = userInformation.getIdentity();// 获得身份
 					if (identity.equals("buyer")) {// 身份为买家
 						if (!buyerPermissionSet.contains(reqPath)) {// 请求的url不在权限内
-							response.sendRedirect(request.getContextPath() + "/noPermission");
+							if (ajaxReq) {
+								response.setContentType("application/json;charset=UTF-8");
+								PrintWriter wr = response.getWriter();
+								wr.write(errorMessage);
+								wr.flush();
+							} else {
+								response.sendRedirect(request.getContextPath() + "/noPermission");
+							}
+							return false;
 						}
 					} else if (identity.equals("seller")) {// 身份为卖家
 						if (!sellerPermissionSet.contains(reqPath)) {
-							response.sendRedirect(request.getContextPath() + "/noPermission");
+							if (ajaxReq) {
+								response.setContentType("application/json;charset=UTF-8");
+								PrintWriter wr = response.getWriter();
+								wr.write(errorMessage);
+								wr.flush();
+							} else {
+								response.sendRedirect(request.getContextPath() + "/noPermission");
+							}
+							return false;
 						}
 					} else if (identity.equals("manager")) {// 身份为管理员
 						if (!managerPermissionSet.contains(reqPath)) {
-							response.sendRedirect(request.getContextPath() + "/noPermission");
+							if (ajaxReq) {
+								response.setContentType("application/json;charset=UTF-8");
+								PrintWriter wr = response.getWriter();
+								wr.write(errorMessage);
+								wr.flush();
+							} else {
+								response.sendRedirect(request.getContextPath() + "/noPermission");
+							}
+							return false;
 						}
-					}else {
+					} else {
 						response.sendRedirect(request.getContextPath() + "/noPermission");
+						return false;
 					}
 
 				}
