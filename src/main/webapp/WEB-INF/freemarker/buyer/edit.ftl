@@ -22,6 +22,11 @@
 </@modalShow>
 
 <script>
+		jQuery.validator.addMethod("zhengzhengshu", function(value, element) {
+			var zhengzhengshu =  /^[1-9]\d*$/
+			return this.optional(element) || (zhengzhengshu.test(value));
+		}, "请输入正确的内容");
+
 	$(document).ready(function(){
 		var $editForm=$("#${entityAbbr}EditForm");
 		var $mngModal=$("#manageModal");
@@ -29,14 +34,22 @@
 		<!-- 格式检验代码 -->
 		$editForm.validate({
 			rules:{
-				idBuyer: {digits:true},					
-				nameBuyer: {maxlength:10},
-				sexBuyer : {maxlength:1},
+				idBuyer: {zhengzhengshu:true},					
+				nameBuyer: {
+					required:true,
+					maxlength:10},
+				sexBuyer : {
+					required:true,
+					maxlength:1},
 				ageBuyer:{
+					required:true,
 					digits:true,
+					zhengzhengshu:true,
 					range:[30,99]
 				},
-				addressBuyer: {maxlength:128},
+				addressBuyer: {
+					required:true,
+					maxlength:128},
 				pastHistoryBuyer: {maxlength:256},
 				childNameBuyer: {maxlength:10},
 				childIdentityBuyer: {maxlength:2},

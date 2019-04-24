@@ -157,8 +157,7 @@
 					price:{
 						required:true,
 						money:true},
-					category: {
-						required:true}				
+					category: {required:true}				
 			},
 	        submitHandler:function(form){
 	            $("#editSubmitButton").attr("disabled","disabled");

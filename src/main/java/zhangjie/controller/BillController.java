@@ -48,12 +48,12 @@ public class BillController extends BaseController {
 		model.addAttribute(Constants.ENTITY_CONF, EntityConfigCache.get(Constants.ENTITY_BILL));
 		return "bill/manage";
 	}
-	
+
 	@RequestMapping(value = "/todayBills")
 	public @ResponseBody AjaxResult todayBills(Integer pageNumber, Integer pageSize) {
 		Map<String, String> qryParamMap = new HashMap<String, String>();
-		Date now =new Date();
-		SimpleDateFormat sdf1 =new SimpleDateFormat("yyyy-MM-dd");
+		Date now = new Date();
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
 		String time = sdf1.format(now);
 		qryParamMap.put("time", "2019-04-15");
 		qryParamMap.put("idSeller", this.getSessionUser().getId().toString());
@@ -72,6 +72,36 @@ public class BillController extends BaseController {
 		return commonBO.buildSuccessResult(Constants.PAGER_RESULT, p);
 	}
 
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	public String add(Model model, Integer id, int quantity) {
+		// 字段检查
+		AssertUtil.argIsNotNull(id, "id is null");
+		AssertUtil.argIsNotNull(quantity, "quantity is null");
+
+		// 从数据库查询记录
+		Commodity commodity = commodityDAO.selectByPrimaryKey(id);
+		AssertUtil.argIsNotNull(commodity, "commodity is null");
+
+		Bill entity = new Bill();
+		entity.setAccountBuyer(this.getSessionUser().getAccount());
+		entity.setIdCommodity(id);
+		entity.setAccountSeller(commodity.getBusinessName());
+		entity.setQuantity(quantity);
+		// 处理价格
+		String[] str = commodity.getPrice().split("/");
+		int price = Integer.parseInt(str[0].substring(0, str[0].length() - 1)) * quantity;
+		entity.setPrice(String.valueOf(price) + "元");
+		entity.setTime(new Date());
+		entity.setState("未评价");
+
+		billDAO.add(entity);
+
+		// 放入model，传入界面
+		model.addAttribute(Constants.ENTITY_RESULT, entity);
+		model.addAttribute(Constants.ENTITY_CONF, EntityConfigCache.get(Constants.ENTITY_BILL));
+		return "main";
+	}
+
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public String edit(Model model, Integer id) {
 		// 字段检查
@@ -80,46 +110,17 @@ public class BillController extends BaseController {
 		// 从数据库查询记录
 		Bill entity = billDAO.selectByPrimaryKey(id);
 		AssertUtil.argIsNotNull(entity, "账单不存在");
-
+		entity.setPrice(entity.getPrice().substring(0, entity.getPrice().length() - 1));
+		
 		// 放入model，传入界面
 		model.addAttribute(Constants.ENTITY_RESULT, entity);
 		model.addAttribute(Constants.ENTITY_CONF, EntityConfigCache.get(Constants.ENTITY_BILL));
 		return "bill/edit";
 	}
-	
-	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public String add(Model model, Integer id,int quantity) {
-		// 字段检查
-		AssertUtil.argIsNotNull(id, "id is null");
-		AssertUtil.argIsNotNull(quantity, "quantity is null");
-		
-		// 从数据库查询记录
-		Commodity commodity=commodityDAO.selectByPrimaryKey(id);
-		AssertUtil.argIsNotNull(commodity, "commodity is null");
-		
-		Bill entity=new Bill();
-		entity.setAccountBuyer(this.getSessionUser().getAccount());
-		entity.setIdCommodity(id);
-		entity.setAccountSeller(commodity.getBusinessName());
-		entity.setQuantity(quantity);
-		//处理价格
-		String[] str = commodity.getPrice().split("/");
-		int price=Integer.parseInt(str[0].substring(0, str[0].length() - 1))*quantity;
-		entity.setPrice(String.valueOf(price)+"元");
-		entity.setTime(new Date());
-		entity.setState("未评价");
-		
-		billDAO.add(entity);
-		
-		// 放入model，传入界面
-		model.addAttribute(Constants.ENTITY_RESULT, entity);
-		model.addAttribute(Constants.ENTITY_CONF, EntityConfigCache.get(Constants.ENTITY_BILL));
-		return "main";
-	}
 
 	@RequestMapping(value = "/edit/submit", method = RequestMethod.POST)
 	public @ResponseBody AjaxResult editSubmit(Bill entity) {
-		Integer id= entity.getId();
+		Integer id = entity.getId();
 
 		// 字段检查
 		AssertUtil.argIsNotNull(id, "id is null");
@@ -136,6 +137,7 @@ public class BillController extends BaseController {
 		AssertUtil.argIsNotNull(dbentity, "账单不存在");
 
 		logger.info(String.format("修改账单开始：%s", BeanUtil.desc(dbentity, null)));
+		entity.setPrice(entity.getPrice()+"元");
 		billDAO.update(entity);
 		logger.info(String.format("修改账单结束：%s", BeanUtil.desc(entity, null)));
 		return commonBO.buildSuccessResult();

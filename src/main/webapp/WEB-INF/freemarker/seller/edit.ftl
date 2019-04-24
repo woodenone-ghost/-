@@ -18,6 +18,11 @@
 </@modalShow>
 
 <script>
+		jQuery.validator.addMethod("zhengzhengshu", function(value, element) {
+			var zhengzhengshu =  /^[1-9]\d*$/
+			return this.optional(element) || (zhengzhengshu.test(value));
+		}, "请输入正确的内容");
+
 	$(document).ready(function(){
 		var $editForm=$("#${entityAbbr}EditForm");
 		var $mngModal=$("#manageModal");
@@ -25,13 +30,19 @@
 		<!-- 格式检验代码 -->
 		$editForm.validate({
 			rules:{
-				idSeller: {digits:true},					
-				nameSeller: {maxlength:32},
-				addressSeller : {maxlength:64},
+				idSeller: {zhengzhengshu:true},					
+				nameSeller: {
+					required:true,
+					maxlength:32},
+				addressSeller : {
+					required:true,
+					maxlength:64},
 				goodSeller:{
+					required:true,
 					digits:true
 				},
 				badSeller:{
+					required:true,
 					digits:true
 				}
 			},

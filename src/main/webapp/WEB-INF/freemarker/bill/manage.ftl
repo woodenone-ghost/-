@@ -75,6 +75,11 @@
 	<@js_include />
 
 	<script>
+	
+		jQuery.validator.addMethod("zhengzhengshu", function(value, element) {
+		    var zhengzhengshu =  /^[1-9]\d*$/
+		    return this.optional(element) || (zhengzhengshu.test(value));
+		}, "请输入正确的内容");
 		
 		function queryParams(params) {
 			params._QRY_id = $("#id").val()
@@ -110,10 +115,10 @@
 			<!-- 格式检验代码 -->
 			$qryForm.validate({
 				rules:{
-					_QRY_id: {digits:true},
-					_QRY_accountBuyer: {maxlength:32},	
-					_QRY_idCommodity: {digits:true},
-					_QRY_accountSeller: {maxlength:32}
+					_QRY_id: {zhengzhengshu:true},
+					_QRY_accountBuyer: {zhengzhengshu:32},	
+					_QRY_idCommodity: {zhengzhengshu:true},
+					_QRY_accountSeller: {zhengzhengshu:32}
 				},
 	        	submitHandler:function(form){
 	            	$("#qryButton").attr("disabled","disabled");
