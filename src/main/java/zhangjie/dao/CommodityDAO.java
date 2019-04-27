@@ -28,8 +28,8 @@ public class CommodityDAO extends BaseDAO<Commodity, CommodityExample, Commodity
 		AssertUtil.argIsNotNull(entity.getBusinessName(), "businessName is null");
 		AssertUtil.argIsNotNull(entity.getCharacteristic(), "characteristic is null");
 		entity.setSalesVolume(0);
-		entity.setEvaluationPrice("0");
-		entity.setEvaluationService("0");
+		entity.setEvaluationPrice(0.0);
+		entity.setEvaluationService(0.0);
 		this.getMapper().insert(entity);
 	}
 
@@ -58,8 +58,8 @@ public class CommodityDAO extends BaseDAO<Commodity, CommodityExample, Commodity
 		AssertUtil.argIsNotNull(entity.getBusinessName(), "businessName is null");
 		AssertUtil.argIsNotNull(entity.getCharacteristic(), "characteristic is null");
 		AssertUtil.argIsNotNull(entity.getSalesVolume(), "salesVolume is null");
-		AssertUtil.strIsNotBlank(entity.getEvaluationPrice(), "evaluationPrice is null");
-		AssertUtil.strIsNotBlank(entity.getEvaluationService(), "evaluationService is null");
+		AssertUtil.argIsNotNull(entity.getEvaluationPrice(), "evaluationPrice is null");
+		AssertUtil.argIsNotNull(entity.getEvaluationService(), "evaluationService is null");
 		this.getMapper().updateByPrimaryKeySelective(entity);
 	}
 
@@ -97,7 +97,7 @@ public class CommodityDAO extends BaseDAO<Commodity, CommodityExample, Commodity
 			criteria.andNameLike("%" + name + "%");
 		}
 		String category = qryParams.get("category");
-		if (StringUtils.isNotBlank(category)) {
+		if (StringUtils.isNotBlank(category) && (!category.equals("全部种类"))) {
 			criteria.andCategoryLike("%" + category + "%");
 		}
 		String businessName = qryParams.get("businessName");
@@ -107,6 +107,10 @@ public class CommodityDAO extends BaseDAO<Commodity, CommodityExample, Commodity
 		String businessNameZ = qryParams.get("businessNameZ");// 专门用来卖家查询自己的账单，所以账号必须完成正确
 		if (StringUtils.isNotBlank(businessNameZ)) {
 			criteria.andBusinessNameEqualTo(businessNameZ);
+		}
+		String shangjia = qryParams.get("shangjia");
+		if (StringUtils.isNotBlank(shangjia)) {
+			criteria.andShangjiaEqualTo(shangjia);
 		}
 		return example;
 	}

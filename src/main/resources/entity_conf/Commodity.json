@@ -41,6 +41,10 @@
         {
             "fId": "evaluationService",
             "fNm": "平均服务评价"
+        },
+        {
+            "fId": "shangjia",
+            "fNm": "上架状态"
         }
     ]
 }

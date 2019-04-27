@@ -16,13 +16,16 @@
 				<nav class="navbar bg-dark navbar-dark h-100">
   					<ul class="navbar-nav" style="position: relative;left: 30px;bottom: 300px;">
 	    					<li class="nav-item">			
+      							<a class="nav-link " href="${ctx}/loginout">登 出</a>
+    					    </li>  						
+	    					<li class="nav-item">			
 	      						<a class="nav-link " href="${ctx}/commodity/add">增 加 商 品</a>
 	    					</li>
 	    					<li class="nav-item">
 	      						<a class="nav-link" href="${ctx}/commodity/sellerManage">管 理 商 品</a>
 	    					</li>
 	    					<li class="nav-item">
-	      						<a class="nav-link" href="#">管 理 账 单</a>
+	      						<a class="nav-link" href="${ctx}/bill/sellerManage">管 理 账 单</a>
 	    					</li>
 	    					<li class="nav-item">
 	      						<a class="nav-link" href="#">图 表 查 看</a>
@@ -71,6 +74,7 @@
 				      <th data-field="salesVolume">${entityConf.fields["salesVolume"].fName}</th>
 				      <th data-field="evaluationPrice">${entityConf.fields["evaluationPrice"].fName}</th>
 				      <th data-field="evaluationService">${entityConf.fields["evaluationService"].fName}</th>
+				      <th data-field="shangjia">${entityConf.fields["shangjia"].fName}</th>
 				    </tr>
 				  </thead>			  
 				</table>

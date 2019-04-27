@@ -8,6 +8,7 @@
 	<@detail fId="id" />
 	<@detail fId="accountBuyer" />
 	<@detail fId="idCommodity" />
+	<@detail fId="nameCommodity" />
 	<@detail fId="accountSeller" />
 	<@detail fId="quantity" />
 	<@detail fId="price" />
@@ -16,7 +17,8 @@
   		<input type="text" class="form-control w-50" id="timeZ" name="timeZ" disabled="disabled" value="${entity["time"]?string('yyyy-MM-dd')}"/>
   	</div>
 	<@detail fId="state" />
+	<@detail fId="evaluation" />
 	<@detail fId="evaluationPrice" />
 	<@detail fId="evaluationService" />
-	<@detail fId="evaluation" />
+	<@detail fId="evaluationWords" />
 </@modalShow>

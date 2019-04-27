@@ -110,14 +110,26 @@ public class CommodityController extends BaseController {
 	@RequestMapping(value = "/qry")
 	public @ResponseBody AjaxResult qry(Integer pageNumber, Integer pageSize) {
 		Map<String, String> qryParamMap = this.getQryParamMap();
-		String identity = this.getSessionUser().getIdentity();
-		if (identity.equals("seller")) {
-			qryParamMap.put("businessNameZ", this.getSessionUser().getAccount());
+		if (this.getSessionUser() != null) {
+			String identity = this.getSessionUser().getIdentity();
+			if (identity.equals("seller")) {
+				qryParamMap.put("businessNameZ", this.getSessionUser().getAccount());
+			} else if (identity.equals("buyer")) {
+				qryParamMap.put("shangjia", "上架");
+			}
 		}
 		logger.info("分页查询开始：" + qryParamMap);
 		Pager<Commodity> p = commodityDAO.selectByPage(pageNumber, pageSize, qryParamMap);
 		logger.info("分页查询结束，总记录数:" + p.getTotal());
 		return commonBO.buildSuccessResult(Constants.PAGER_RESULT, p);
+	}
+
+	@RequestMapping(value = "/gotoSearch")
+	public String search(Model model, String _QRY_category, String _QRY_name) {
+		model.addAttribute(Constants.ENTITY_CONF, EntityConfigCache.get(Constants.ENTITY_COMMODITY));
+		model.addAttribute("name", _QRY_name);
+		model.addAttribute("category", _QRY_category);
+		return "someCommodities";
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
@@ -141,7 +153,7 @@ public class CommodityController extends BaseController {
 	@RequestMapping(value = "/edit/submit", method = RequestMethod.POST)
 	public @ResponseBody AjaxResult editSubmit(int id, String name, String price, String danwei, String category,
 			String businessName, MultipartFile icon, MultipartFile characteristic, int salesVolume,
-			String evaluationPrice, String evaluationService, HttpSession session) {
+			double evaluationPrice, double evaluationService, HttpSession session) {
 
 		// 字段检查
 		AssertUtil.argIsNotNull(id, "id is null");
@@ -151,8 +163,8 @@ public class CommodityController extends BaseController {
 		AssertUtil.strIsNotBlank(category, "category is null");
 		AssertUtil.strIsNotBlank(businessName, "businessName is null");
 		AssertUtil.argIsNotNull(salesVolume, "salesVolume is null");
-		AssertUtil.strIsNotBlank(evaluationPrice, "evaluationPrice is null");
-		AssertUtil.strIsNotBlank(evaluationService, "evaluationService is null");
+		AssertUtil.argIsNotNull(evaluationPrice, "evaluationPrice is null");
+		AssertUtil.argIsNotNull(evaluationService, "evaluationService is null");
 
 		// 从数据库查询记录
 		Commodity dbentity = commodityDAO.selectByPrimaryKey(id);
@@ -179,7 +191,7 @@ public class CommodityController extends BaseController {
 				entity.setIcon(dbentity.getIcon());
 			}
 			entity.setName(name);
-			entity.setPrice(price+danwei);
+			entity.setPrice(price + danwei);
 			entity.setCategory(category);
 			entity.setBusinessName(this.getSessionUser().getAccount());
 			if (null != characteristic) {
@@ -222,6 +234,38 @@ public class CommodityController extends BaseController {
 		logger.info(String.format("删除商品开始：%s", BeanUtil.desc(entity, null)));
 		commodityDAO.delete(id);
 		logger.info(String.format("删除商品结束：%s", BeanUtil.desc(entity, null)));
+		return commonBO.buildSuccessResult();
+	}
+
+	@RequestMapping(value = "/shangjia", method = RequestMethod.POST)
+	public @ResponseBody AjaxResult shangjia(Integer id) {
+		// 字段检查
+		AssertUtil.argIsNotNull(id, "id is null");
+
+		// 从数据库查询记录
+		Commodity entity = commodityDAO.selectByPrimaryKey(id);
+		AssertUtil.argIsNotNull(entity, "商品不存在");
+
+		logger.info(String.format("上架商品开始：%s", BeanUtil.desc(entity, null)));
+		entity.setShangjia("上架");
+		commodityDAO.update(entity);
+		logger.info(String.format("上架商品结束：%s", BeanUtil.desc(entity, null)));
+		return commonBO.buildSuccessResult();
+	}
+
+	@RequestMapping(value = "/xiajia", method = RequestMethod.POST)
+	public @ResponseBody AjaxResult xiajia(Integer id) {
+		// 字段检查
+		AssertUtil.argIsNotNull(id, "id is null");
+
+		// 从数据库查询记录
+		Commodity entity = commodityDAO.selectByPrimaryKey(id);
+		AssertUtil.argIsNotNull(entity, "商品不存在");
+
+		logger.info(String.format("下架商品开始：%s", BeanUtil.desc(entity, null)));
+		entity.setShangjia("下架");
+		commodityDAO.update(entity);
+		logger.info(String.format("下架商品结束：%s", BeanUtil.desc(entity, null)));
 		return commonBO.buildSuccessResult();
 	}
 

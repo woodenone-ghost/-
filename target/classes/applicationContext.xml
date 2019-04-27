@@ -75,19 +75,21 @@
 			<mvc:exclude-mapping path="/resources/**" />
 			<bean id="sessionChecker" class="zhangjie.web.interceptor.SessionChecker">
 				<property name="ignoredUrls"
-					value="/,/login,/login/submit,/loginout,/manager/login,/register,/register/submit,/register/identity,/register/buyer/submit,/register/seller/submit,/noPermission"></property>
+					value="/,/login,/login/submit,/loginout,/manager/login,/register,/register/submit,/register/identity,
+					/register/buyer/submit,/register/seller/submit,/noPermission,/commodity/gotoSearch,/commodity/qry,/commodity/detail"></property>
 				<property name="managerPermissions"
 					value="/changePassword,/changePassword/submit,
 					/buyer/manage,/buyer/qry,/buyer/edit,/buyer/edit/submit,/buyer/delete,/buyer/detail,
 					/seller/manage,/seller/qry,/seller/edit,/seller/edit/submit,/seller/delete,/seller/detail,
-					/commodity/manage,/commodity/qry,/commodity/edit,/commodity/edit/submit,/commodity/delete,/commodity/detail,
+					/commodity/manage,/commodity/edit,/commodity/edit/submit,/commodity/delete,
 					/bill/manage,/bill/qry,/bill/edit,/bill/edit/submit,/bill/delete,/bill/detail"></property>
 				<property name="buyerPermissions"
-					value="/changePassword,/changePassword/submit,/userInformation,/userInformation/submit"></property>
+					value="/changePassword,/changePassword/submit,/userInformation,/userInformation/submit,
+					/bill/add,/bill/qry,/bill/detail,/bill/delete,/bill/notEvaluateBills,/bill/evaluate,/bill/evaluate/submit"></property>
 				<property name="sellerPermissions"
 					value="/changePassword,/changePassword/submit,/userInformation,/userInformation/submit,
-					/bill/todayBills,/bill/add,
-					/commodity/add,/commodity/add/submit,/commodity/sellerManage,/commodity/qry,/commodity/edit,/commodity/edit/submit,/commodity/delete,/commodity/detail"></property>
+					/bill/todayBills,/bill/notEvaluateBills,/bill/badBills,/bill/sellerManage,/bill/qry,/bill/detail,/bill/edit,/bill/edit/submit,/bill/delete,
+					/commodity/add,/commodity/add/submit,/commodity/sellerManage,/commodity/edit,/commodity/edit/submit,/commodity/delete"></property>
 			</bean>
 		</mvc:interceptor>
 		<mvc:interceptor>

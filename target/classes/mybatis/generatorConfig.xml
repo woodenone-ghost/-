@@ -54,15 +54,17 @@
 		<table tableName="userInformation" domainObjectName="UserInformation">
 			<property name="useActualColumnNames" value="false" />
 		</table>
-			
-		-->
 
-
+		
 		<table tableName="bill" domainObjectName="Bill">
 			<property name="useActualColumnNames" value="false" />
-		</table>
+		</table>			
+		-->
+
 		<table tableName="commodity" domainObjectName="Commodity">
 			<property name="useActualColumnNames" value="false" />
 		</table>
+
+
 	</context>
 </generatorConfiguration>

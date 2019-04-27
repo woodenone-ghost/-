@@ -36,7 +36,7 @@
   					<label class="w-25">助洁:</label>
   					<input type="radio" name="category" checked="checked" value="购物" id="category">&nbsp;购 物
   					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  					<input type="radio" name="category" value="category" id="打扫" style="position: relative;left: 41px;">
+  					<input type="radio" name="category" value="打扫" id="打扫" style="position: relative;left: 41px;">
   					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;打 扫
   				</div>
   				<div class="col-lg-12 form-inline" >

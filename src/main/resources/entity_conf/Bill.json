@@ -15,6 +15,10 @@
             "fNm": "商品id"
         },
         {
+            "fId": "nameCommodity",
+            "fNm": "商品名称"
+        },
+        {
             "fId": "accountSeller",
             "fNm": "卖家名称"
         },
@@ -44,7 +48,11 @@
         },
         {
             "fId": "evaluation",
-            "fNm": "商品评价"
+            "fNm": "评价"
+        },
+        {
+            "fId": "evaluationWords",
+            "fNm": "商品点评"
         }
     ]
 }

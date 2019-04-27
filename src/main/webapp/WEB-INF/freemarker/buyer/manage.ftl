@@ -16,6 +16,9 @@
 				<nav class="navbar bg-dark navbar-dark h-100">
   					<ul class="navbar-nav" style="position: relative;left: 30px;bottom: 300px;">
     					<li class="nav-item">			
+      						<a class="nav-link " href="${ctx}/loginout">登 出</a>
+    					</li> 
+    					<li class="nav-item">			
       						<a class="nav-link " href="${ctx}/buyer/manage">买 家 管 理</a>
     					</li>
     					<li class="nav-item">

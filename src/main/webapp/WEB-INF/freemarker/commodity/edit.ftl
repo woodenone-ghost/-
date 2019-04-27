@@ -127,7 +127,8 @@
 		<div class="col-lg-11 form-inline" style="margin-bottom: 15px;margin-top: 15px;">
 			<label for="characteristic" class="w-25">新商品详情:</label>
 			<input type="file" name="characteristic" id="characteristic" accept="image/gif,image/jpeg,image/jpg,image/png" />
-		</div>    		
+		</div>
+		<@edit fId="shangjia" />    		
 		<@detail fId="salesVolume" />
 		<@detail fId="evaluationPrice" />
 		<@detail fId="evaluationService" />

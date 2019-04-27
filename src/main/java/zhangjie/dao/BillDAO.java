@@ -29,6 +29,10 @@ public class BillDAO extends BaseDAO<Bill, BillExample, BillMapper> {
 		AssertUtil.strIsNotBlank(entity.getPrice(), "price is null");
 		AssertUtil.argIsNotNull(entity.getTime(), "time is null");
 		AssertUtil.strIsNotBlank(entity.getState(), "state is null");
+		entity.setEvaluation(" ");
+		entity.setEvaluationPrice(" ");
+		entity.setEvaluationService(" ");
+		entity.setEvaluationWords(" ");
 		this.getMapper().insert(entity);
 	}
 
@@ -83,28 +87,44 @@ public class BillDAO extends BaseDAO<Bill, BillExample, BillMapper> {
 	 */
 	protected BillExample buildExample(Map<String, String> qryParams) {
 		// TODO Auto-generated method stub
-		BillExample example=new BillExample();
-		Criteria criteria=example.createCriteria();
-		String id=qryParams.get("id");
-		if(StringUtils.isNotBlank(id)) {
+		BillExample example = new BillExample();
+		Criteria criteria = example.createCriteria();
+		String id = qryParams.get("id");
+		if (StringUtils.isNotBlank(id)) {
 			criteria.andIdEqualTo(Integer.valueOf(id));
 		}
-		String accountBuyer=qryParams.get("accountBuyer");
-		if(StringUtils.isNotBlank(accountBuyer)) {
-			criteria.andAccountBuyerLike("%"+accountBuyer+"%");
+		String accountBuyer = qryParams.get("accountBuyer");
+		if (StringUtils.isNotBlank(accountBuyer)) {
+			criteria.andAccountBuyerLike("%" + accountBuyer + "%");
 		}
-		String idCommodity=qryParams.get("idCommodity");
-		if(StringUtils.isNotBlank(idCommodity)) {
+		String idCommodity = qryParams.get("idCommodity");
+		if (StringUtils.isNotBlank(idCommodity)) {
 			criteria.andIdCommodityEqualTo(Integer.valueOf(idCommodity));
 		}
-		String accountSeller=qryParams.get("accountSeller");
-		if(StringUtils.isNotBlank(accountSeller)) {
-			criteria.andAccountSellerLike("%"+accountSeller+"%");
+		String accountSeller = qryParams.get("accountSeller");
+		if (StringUtils.isNotBlank(accountSeller)) {
+			criteria.andAccountSellerLike("%" + accountSeller + "%");
 		}
-		String time=qryParams.get("time");
-		if(StringUtils.isNotBlank(time)) {
-			Date now=new Date();
-			criteria.andTimeEqualTo(now);		
+		String accountSellerZ = qryParams.get("accountSellerZ");// 专门用于检查用户自己的数据，所以必须完全正确
+		if (StringUtils.isNotBlank(accountSellerZ)) {
+			criteria.andAccountSellerEqualTo(accountSellerZ);
+		}
+		String accountBuyerZ = qryParams.get("accountBuyerZ");// 专门用于检查用户自己的数据，所以必须完全正确
+		if (StringUtils.isNotBlank(accountBuyerZ)) {
+			criteria.andAccountBuyerEqualTo(accountBuyerZ);
+		}
+		String state = qryParams.get("state");
+		if (StringUtils.isNotBlank(state)) {
+			criteria.andStateEqualTo(state);
+		}
+		String evaluation = qryParams.get("evaluation");
+		if (StringUtils.isNotBlank(evaluation)) {
+			criteria.andEvaluationEqualTo(evaluation);
+		}
+		String time = qryParams.get("time");
+		if (StringUtils.isNotBlank(time)) {
+			Date now = new Date();
+			criteria.andTimeEqualTo(now);
 		}
 		return example;
 	}

@@ -26,6 +26,7 @@
 		<@edit fId="evaluationPrice" />
 		<@edit fId="evaluationService" />
 		<@edit fId="evaluation" />
+		<@edit fId="evaluationWords" />
 	</@editForm>
 </@modalShow>
 
