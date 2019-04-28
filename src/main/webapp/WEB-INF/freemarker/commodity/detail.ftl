@@ -66,8 +66,27 @@
       					<img src="${ctx}/resources/characteristic/${entity["characteristic"]}" class="img-thumbnail w-100">
     				</div>
     				<div id="evaluation" class="container tab-pane fade"><br>
-      					<h3>Menu 1</h3>
-      					<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+							<!-- 未评价账单表格展示 -->
+							<table
+							  id="QryTable"
+			  			      data-toggle="table"
+			  			      data-pagination="true"
+			  			      data-side-pagination="server"
+			  			      data-query-params-type=''
+			  			      data-query-params="queryParams"
+			  				  data-url="${ctx}/bill/getEvaluationWords"
+			  				  data-response-handler="responseHandler">
+			  			      <thead>
+							  	<tr>
+							      <th data-field="accountBuyer">买家账号</th>
+							      <th data-field="time">日期</th>
+							      <th data-field="evaluation">评价</th>
+							      <th data-field="evaluationPrice">价格评价</th>
+							      <th data-field="evaluationService">服务评价</th>
+							      <th data-field="evaluationWords">商品点评</th>
+							    </tr>
+							  </thead>			  
+							</table>      					
     				</div>
   				</div>
 			</div>
@@ -82,6 +101,13 @@
 	<@js_include />
 	
 	<script>
-	
+		function responseHandler(res) {
+    		return res.data.pager
+  		}	
+
+		function queryParams(params) {
+    		params._QRY_id = ${entity["id"]}
+    		return params
+  		}	
 	</script>
 </@html>

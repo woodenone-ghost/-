@@ -1,4 +1,10 @@
-$.dealAjaxResp = function(r, succCallBack, failCallBack) {
+$.dealAjaxResp = function(c, succCallBack, failCallBack) {
+	var r;
+	if(c instanceof Object){
+		r=c;
+	}else{
+		r=JSON.parse(c);
+	}
 	var code = r.code;
 	if ("00" == code) {
 		if (typeof succCallBack == "function") {

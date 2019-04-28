@@ -237,7 +237,7 @@ public class CommodityController extends BaseController {
 		return commonBO.buildSuccessResult();
 	}
 
-	@RequestMapping(value = "/shangjia", method = RequestMethod.POST)
+	@RequestMapping(value = "/shangjia", method = RequestMethod.GET)
 	public @ResponseBody AjaxResult shangjia(Integer id) {
 		// 字段检查
 		AssertUtil.argIsNotNull(id, "id is null");
@@ -253,7 +253,7 @@ public class CommodityController extends BaseController {
 		return commonBO.buildSuccessResult();
 	}
 
-	@RequestMapping(value = "/xiajia", method = RequestMethod.POST)
+	@RequestMapping(value = "/xiajia", method = RequestMethod.GET)
 	public @ResponseBody AjaxResult xiajia(Integer id) {
 		// 字段检查
 		AssertUtil.argIsNotNull(id, "id is null");

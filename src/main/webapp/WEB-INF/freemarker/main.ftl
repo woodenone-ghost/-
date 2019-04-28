@@ -227,6 +227,7 @@
   		function Formatter1(value, row) {   	
 	    	var id1=row.id
 	    	var result="<button type=\"button\" class=\"btn btn-info\" onclick=\"evaluate1("+id1+")\">评 价</button>"
+	    	result=result+" "+"<button type=\"button\" id=\"detailButton\" class=\"btn btn-primary\" onclick=\"detail("+id1+")\">详 情</button>"
 	    	return result
   		}
   		

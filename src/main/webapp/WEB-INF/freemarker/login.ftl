@@ -59,9 +59,6 @@
                     error.appendTo(element.parent());
                 }
             });
-            $("#loginBtn").click(function(){
-                $frm.submit();
-            });
         });
     </script>
     

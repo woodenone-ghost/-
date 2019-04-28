@@ -14,9 +14,8 @@
 		
 		<@detail fId="idCommodity" colClass="col-lg-6"/>
 		<@editHidden fId="idCommodity" type="hidden"/>
-
+		
 		<@detail fId="nameCommodity" colClass="col-lg-6"/>
-		<@editHidden fId="nameCommodity" type="hidden"/>
 		
 		<@detail fId="accountSeller" colClass="col-lg-6"/>
 		<@editHidden fId="accountSeller" type="hidden"/>
@@ -47,12 +46,12 @@
 		
 		<div class="col-lg-12 form-inline" id="evaluationPrice1" style="margin-bottom: 15px;margin-top: 15px;">
 			<label for="evaluationPrice" class="w-25">价格评价:</label>
-			<input type="hidden" class="form-control w-50" id="evaluationPrice" name="evaluationPrice"/>
+			<input type="hidden" class="form-control w-50" id="evaluationPrice" name="evaluationPrice" value="5"/>
 		</div>
 		
 		<div class="col-lg-12 form-inline" id="evaluationService1" style="margin-bottom: 15px;margin-top: 15px;">
 			<label for="evaluationService" class="w-25">服务评价:</label>
-			<input type="hidden" class="form-control w-50" id="evaluationService" name="evaluationService"/>
+			<input type="hidden" class="form-control w-50" id="evaluationService" name="evaluationService" value="5"/>
 		</div>
 		
 		<div class="col-lg-12 form-inline" style="margin-bottom: 15px;margin-top: 15px;">
@@ -64,7 +63,12 @@
 	</@editForm>
 </@modalShow>
 
-<script>
+<script>	
+	jQuery.validator.addMethod("zhengzhengshu", function(value, element) {
+		var zhengzhengshu =  /^[1-9]\d*$/
+		return this.optional(element) || (zhengzhengshu.test(value));
+	}, "请输入正确的内容");
+
 	$(function() {
  		$('#evaluationPrice1').raty({
 	        number: 5,
@@ -87,6 +91,45 @@
 	        starOn: 'star-on.png',
 	        targetScore: '#evaluationService'
 	    });	
+	});
+	
+		$(document).ready(function(){
+		var $editForm=$("#${entityAbbr}EditForm");
+		
+		<!-- 格式检验代码 -->
+		$editForm.validate({
+			rules:{
+				id: {zhengzhengshu:true},	
+				idCommodity: {zhengzhengshu:true},	
+				accountSeller: {
+					required:true,
+					maxlength:32},						
+				quantity: {zhengzhengshu:true},	
+				price: {money:true},
+				time:{required:true},
+				state:{required:true},
+				evaluation:{required:true},
+				evaluationPrice:{required:true},
+				evaluationService:{required:true},			
+			},
+	        submitHandler:function(form){
+	            $("#editSubmitButton").attr("disabled","disabled");
+	            $(form).ajaxSubmit({
+	                type:"post",
+	                dateType:"json",
+	                success:function(resp){
+	                	$.dealAjaxResp(resp,function(data){
+	                	$("#editSubmitButton").removeAttr("disabled");
+	                	alert("评价成功");
+	                	$.jumpTo("${ctx}/login")
+	                    });
+	                }
+	            });
+	        },
+	        errorPlacement:function(error,element){
+	            error.appendTo(element.parent());
+	        }
+        });			
 	});
 	
 </script>

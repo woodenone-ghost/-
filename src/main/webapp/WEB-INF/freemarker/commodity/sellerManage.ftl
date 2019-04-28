@@ -57,6 +57,7 @@
 				<div style="position: relative;top: 40px;">
 				<table
 				  id="${entityAbbr}QryTable"
+				  data-unique-id="id"
   			      data-toggle="table"
   			      data-pagination="true"
   			      data-side-pagination="server"
@@ -75,6 +76,7 @@
 				      <th data-field="evaluationPrice">${entityConf.fields["evaluationPrice"].fName}</th>
 				      <th data-field="evaluationService">${entityConf.fields["evaluationService"].fName}</th>
 				      <th data-field="shangjia">${entityConf.fields["shangjia"].fName}</th>
+				      <th data-field="control" data-formatter="Formatter">操作</th>
 				    </tr>
 				  </thead>			  
 				</table>
@@ -89,6 +91,35 @@
 	<@js_include />
 
 	<script>
+
+	 	function Formatter(value, row) {   	
+	    	var id1=row.id
+	    	var result="<button type=\"button\" class=\"btn btn-info\" onclick=\"shangjia("+id1+")\">上 架</button>"
+	    	result=result+" "+"<button type=\"button\" id=\"detailButton\" class=\"btn btn-danger\" onclick=\"xiajia("+id1+")\">下 架</button>"
+	    	return result
+  		}
+  		
+  		function shangjia(id){
+             var url="${ctx}/commodity/shangjia?id="+id;
+             var $qryTable=$("#${entityAbbr}QryTable");
+             $.get(url,function(data){
+             	alert("上架成功!");
+             	var row = $qryTable.bootstrapTable('getRowByUniqueId', id);
+             	row.shangjia="上架";
+             	$qryTable.bootstrapTable('updateByUniqueId', {id: id, row: row})
+             });
+  		}  	
+  		
+  		function xiajia(id){
+             var url="${ctx}/commodity/xiajia?id="+id;
+             var $qryTable=$("#${entityAbbr}QryTable");
+             $.get(url,function(data){
+             	alert("下架成功!");
+             	var row = $qryTable.bootstrapTable('getRowByUniqueId', id);
+             	row.shangjia="下架";
+             	$qryTable.bootstrapTable('updateByUniqueId', {id: id, row: row})
+             });
+  		} 	
 	
 		jQuery.validator.addMethod("zhengzhengshu", function(value, element) {
 			var zhengzhengshu =  /^[1-9]\d*$/

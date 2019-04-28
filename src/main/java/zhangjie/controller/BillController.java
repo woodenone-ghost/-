@@ -111,16 +111,13 @@ public class BillController extends BaseController {
 		return commonBO.buildSuccessResult(Constants.PAGER_RESULT, p);
 	}
 
-	@RequestMapping(value = "/myBills")
-	public @ResponseBody AjaxResult myBills(Integer pageNumber, Integer pageSize) {
+	@RequestMapping(value = "/getEvaluationWords")
+	public @ResponseBody AjaxResult myBills(Integer pageNumber, Integer pageSize ,int _QRY_id) {
 		Map<String, String> qryParamMap = new HashMap<String, String>();
-		qryParamMap.put("accountBuyerZ", this.getSessionUser().getAccount());
+		qryParamMap.put("idCommodity", String.valueOf(_QRY_id));
+		qryParamMap.put("state", "已评价");
 		logger.info("分页查询开始：" + qryParamMap);
 		Pager<Bill> p = billDAO.selectByPage(pageNumber, pageSize, qryParamMap);
-		List<Bill> bills = p.getRows();
-		for (Bill bill : bills) {
-			bill.setNameCommodity(commodityDAO.selectByPrimaryKey(bill.getIdCommodity()).getName());
-		}
 		logger.info("分页查询结束，总记录数:" + p.getTotal());
 		return commonBO.buildSuccessResult(Constants.PAGER_RESULT, p);
 	}

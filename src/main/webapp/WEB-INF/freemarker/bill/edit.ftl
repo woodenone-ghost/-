@@ -51,7 +51,7 @@
 				id: {zhengzhengshu:true},	
 				accountBuyer: {zhengzhengshu:32},
 				idCommodity: {zhengzhengshu:true},	
-				nameSeller: {
+				accountSeller: {
 					required:true,
 					maxlength:32},						
 				quantity: {zhengzhengshu:true},	
