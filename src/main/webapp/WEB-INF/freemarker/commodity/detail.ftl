@@ -57,7 +57,7 @@
 	    				<a class="nav-link active" data-toggle="tab" href="#commodityDetail">商 品 详 情</a>
 	  				</li>
 	  				<li class="nav-item">
-	    				<a class="nav-link" data-toggle="tab" href="#evaluation">卖 家 评 价</a>
+	    				<a class="nav-link" data-toggle="tab" href="#evaluation">买 家 评 价</a>
 				  	</li>
 				</ul>
 				

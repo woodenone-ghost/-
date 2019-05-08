@@ -13,7 +13,7 @@
 	<@page_body>
 		<div class="row" style="height:830px;">
   			<div class="col-lg-2"> <!-- 左侧导航栏 -->
-				<nav class="navbar bg-dark navbar-dark h-100">
+				<nav class="navbar bg-light navbar-light h-100">
   					<ul class="navbar-nav" style="position: relative;left: 30px;bottom: 300px;">
   						<li class="nav-item">			
       						<a class="nav-link " href="${ctx}/loginout">登 出</a>

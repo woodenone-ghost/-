@@ -22,4 +22,8 @@ public class Constants {
 	public static final String ENTITY_RESULT="entity";
 	public static final String PAGER_RESULT="pager";
 	public static final String LIST_RESULT="list";
+	
+	public static final String WEIFAHUO="未发货";
+	public static final String WEIPINJIA="已发货/未评价";
+	public static final String YIPINJIA="已评价";
 }

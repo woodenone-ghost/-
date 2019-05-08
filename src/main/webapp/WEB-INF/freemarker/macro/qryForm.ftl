@@ -11,9 +11,12 @@
 			<div class="col-lg-1" style="position: relative;left: 40px;margin-bottom: 15px;">
 				<button type="button" id="deleteButton" class="btn btn-danger">删 除</button>
 			</div>
-			<div class="col-lg-1" style="position: relative;left: 40px;margin-bottom: 15px;">
-				<button type="button" id="editButton" class="btn btn-warning">修 改</button>
-			</div>
+			<#assign userInformation=Session.SESSION_KEY_USER />
+			<#if userInformation.identity!="buyer">
+				<div class="col-lg-1" style="position: relative;left: 40px;margin-bottom: 15px;">
+					<button type="button" id="editButton" class="btn btn-warning">修 改</button>
+				</div>
+			</#if>
 			<div class="col-lg-1" style="position: relative;left: 40px;margin-bottom: 15px;">
 				<button type="button" id="detailButton" class="btn btn-info">详 情</button>
 			</div>		

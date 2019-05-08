@@ -6,7 +6,7 @@
 <#include "/macro/qryForm.ftl"/>
 <#include "/macro/manage_modal.ftl"/>
 
-<@modalShow title="修改">
+<@modalShow title="评价">
 	<@editForm id="${entityAbbr}Edit" action="${basePath}/evaluate/submit" style="position: relative;left: 633px;top: 71px;">
 	
 		<@detail fId="id" colClass="col-lg-6"/>

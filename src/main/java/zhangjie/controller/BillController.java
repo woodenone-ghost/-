@@ -56,72 +56,6 @@ public class BillController extends BaseController {
 		return "bill/sellerManage";
 	}
 
-	@RequestMapping(value = "/todayBills")
-	public @ResponseBody AjaxResult todayBills(Integer pageNumber, Integer pageSize) {
-		Map<String, String> qryParamMap = new HashMap<String, String>();
-		Date now = new Date();
-		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-		String time = sdf1.format(now);
-		qryParamMap.put("time", time);
-		qryParamMap.put("accountSellerZ", this.getSessionUser().getAccount());
-		logger.info("分页查询开始：" + qryParamMap);
-		Pager<Bill> p = billDAO.selectByPage(pageNumber, pageSize, qryParamMap);
-
-		List<Bill> bills = p.getRows();
-		for (Bill bill : bills) {
-			bill.setNameCommodity(commodityDAO.selectByPrimaryKey(bill.getIdCommodity()).getName());
-		}
-		logger.info("分页查询结束，总记录数:" + p.getTotal());
-		return commonBO.buildSuccessResult(Constants.PAGER_RESULT, p);
-	}
-
-	@RequestMapping(value = "/notEvaluateBills")
-	public @ResponseBody AjaxResult notEvaluateBills(Integer pageNumber, Integer pageSize) {
-		Map<String, String> qryParamMap = new HashMap<String, String>();
-		qryParamMap.put("state", "未评价");
-		if (this.getSessionUser().getIdentity().equals("seller")) {
-			qryParamMap.put("accountSellerZ", this.getSessionUser().getAccount());
-		} else if (this.getSessionUser().getIdentity().equals("buyer")) {
-			qryParamMap.put("accountBuyerZ", this.getSessionUser().getAccount());
-		}
-
-		logger.info("分页查询开始：" + qryParamMap);
-		Pager<Bill> p = billDAO.selectByPage(pageNumber, pageSize, qryParamMap);
-		List<Bill> bills = p.getRows();
-		for (Bill bill : bills) {
-			bill.setNameCommodity(commodityDAO.selectByPrimaryKey(bill.getIdCommodity()).getName());
-		}
-		logger.info("分页查询结束，总记录数:" + p.getTotal());
-		return commonBO.buildSuccessResult(Constants.PAGER_RESULT, p);
-	}
-
-	@RequestMapping(value = "/badBills")
-	public @ResponseBody AjaxResult badBills(Integer pageNumber, Integer pageSize) {
-		Map<String, String> qryParamMap = new HashMap<String, String>();
-		qryParamMap.put("state", "已评价");
-		qryParamMap.put("evaluation", "差评");
-		qryParamMap.put("accountSellerZ", this.getSessionUser().getAccount());
-		logger.info("分页查询开始：" + qryParamMap);
-		Pager<Bill> p = billDAO.selectByPage(pageNumber, pageSize, qryParamMap);
-		List<Bill> bills = p.getRows();
-		for (Bill bill : bills) {
-			bill.setNameCommodity(commodityDAO.selectByPrimaryKey(bill.getIdCommodity()).getName());
-		}
-		logger.info("分页查询结束，总记录数:" + p.getTotal());
-		return commonBO.buildSuccessResult(Constants.PAGER_RESULT, p);
-	}
-
-	@RequestMapping(value = "/getEvaluationWords")
-	public @ResponseBody AjaxResult myBills(Integer pageNumber, Integer pageSize ,int _QRY_id) {
-		Map<String, String> qryParamMap = new HashMap<String, String>();
-		qryParamMap.put("idCommodity", String.valueOf(_QRY_id));
-		qryParamMap.put("state", "已评价");
-		logger.info("分页查询开始：" + qryParamMap);
-		Pager<Bill> p = billDAO.selectByPage(pageNumber, pageSize, qryParamMap);
-		logger.info("分页查询结束，总记录数:" + p.getTotal());
-		return commonBO.buildSuccessResult(Constants.PAGER_RESULT, p);
-	}
-
 	@RequestMapping(value = "/qry")
 	public @ResponseBody AjaxResult qry(Integer pageNumber, Integer pageSize) {
 		Map<String, String> qryParamMap = this.getQryParamMap();
@@ -140,36 +74,6 @@ public class BillController extends BaseController {
 		}
 		logger.info("分页查询结束，总记录数:" + p.getTotal());
 		return commonBO.buildSuccessResult(Constants.PAGER_RESULT, p);
-	}
-
-	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public String add(Model model, Integer id, int quantity) {
-		// 字段检查
-		AssertUtil.argIsNotNull(id, "id is null");
-		AssertUtil.argIsNotNull(quantity, "quantity is null");
-
-		// 从数据库查询记录
-		Commodity commodity = commodityDAO.selectByPrimaryKey(id);
-		AssertUtil.argIsNotNull(commodity, "commodity is null");
-
-		Bill entity = new Bill();
-		entity.setAccountBuyer(this.getSessionUser().getAccount());
-		entity.setIdCommodity(id);
-		entity.setAccountSeller(commodity.getBusinessName());
-		entity.setQuantity(quantity);
-		// 处理价格
-		String[] str = commodity.getPrice().split("/");
-		int price = Integer.parseInt(str[0].substring(0, str[0].length() - 1)) * quantity;
-		entity.setPrice(String.valueOf(price) + "元");
-		entity.setTime(new Date());
-		entity.setState("未评价");
-
-		billDAO.add(entity);
-
-		// 放入model，传入界面
-		model.addAttribute(Constants.ENTITY_RESULT, entity);
-		model.addAttribute(Constants.ENTITY_CONF, EntityConfigCache.get(Constants.ENTITY_BILL));
-		return "main";
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
@@ -244,6 +148,103 @@ public class BillController extends BaseController {
 		return "bill/detail";
 	}
 	
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	public String add(Model model, Integer id, int quantity) {
+		// 字段检查
+		AssertUtil.argIsNotNull(id, "id is null");
+		AssertUtil.argIsNotNull(quantity, "quantity is null");
+
+		// 从数据库查询记录
+		Commodity commodity = commodityDAO.selectByPrimaryKey(id);
+		AssertUtil.argIsNotNull(commodity, "commodity is null");
+
+		Bill entity = new Bill();
+		entity.setAccountBuyer(this.getSessionUser().getAccount());
+		entity.setIdCommodity(id);
+		entity.setAccountSeller(commodity.getBusinessName());
+		entity.setQuantity(quantity);
+		
+		// 处理价格
+		String[] str = commodity.getPrice().split("/");
+		int price = Integer.parseInt(str[0].substring(0, str[0].length() - 1)) * quantity;
+		entity.setPrice(String.valueOf(price) + "元");
+		entity.setTime(new Date());
+		entity.setState(Constants.WEIFAHUO);
+
+		billDAO.add(entity);
+
+		// 放入model，传入界面
+		model.addAttribute(Constants.ENTITY_RESULT, entity);
+		model.addAttribute(Constants.ENTITY_CONF, EntityConfigCache.get(Constants.ENTITY_BILL));
+		return "main";
+	}
+
+	@RequestMapping(value = "/todayBills")
+	public @ResponseBody AjaxResult todayBills(Integer pageNumber, Integer pageSize) {
+		Map<String, String> qryParamMap = new HashMap<String, String>();
+		Date now = new Date();
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+		String time = sdf1.format(now);
+		qryParamMap.put("time", time);
+		qryParamMap.put("accountSellerZ", this.getSessionUser().getAccount());
+		logger.info("分页查询开始：" + qryParamMap);
+		Pager<Bill> p = billDAO.selectByPage(pageNumber, pageSize, qryParamMap);
+
+		List<Bill> bills = p.getRows();
+		for (Bill bill : bills) {
+			bill.setNameCommodity(commodityDAO.selectByPrimaryKey(bill.getIdCommodity()).getName());
+		}
+		logger.info("分页查询结束，总记录数:" + p.getTotal());
+		return commonBO.buildSuccessResult(Constants.PAGER_RESULT, p);
+	}
+
+	@RequestMapping(value = "/notEvaluateBills")
+	public @ResponseBody AjaxResult notEvaluateBills(Integer pageNumber, Integer pageSize) {
+		Map<String, String> qryParamMap = new HashMap<String, String>();
+		qryParamMap.put("state", "未评价");
+		if (this.getSessionUser().getIdentity().equals("seller")) {
+			qryParamMap.put("accountSellerZ", this.getSessionUser().getAccount());
+		} else if (this.getSessionUser().getIdentity().equals("buyer")) {
+			qryParamMap.put("accountBuyerZ", this.getSessionUser().getAccount());
+		}
+
+		logger.info("分页查询开始：" + qryParamMap);
+		Pager<Bill> p = billDAO.selectByPage(pageNumber, pageSize, qryParamMap);
+		List<Bill> bills = p.getRows();
+		for (Bill bill : bills) {
+			bill.setNameCommodity(commodityDAO.selectByPrimaryKey(bill.getIdCommodity()).getName());
+		}
+		logger.info("分页查询结束，总记录数:" + p.getTotal());
+		return commonBO.buildSuccessResult(Constants.PAGER_RESULT, p);
+	}
+
+	@RequestMapping(value = "/badBills")
+	public @ResponseBody AjaxResult badBills(Integer pageNumber, Integer pageSize) {
+		Map<String, String> qryParamMap = new HashMap<String, String>();
+		qryParamMap.put("state", "已评价");
+		qryParamMap.put("evaluation", "差评");
+		qryParamMap.put("accountSellerZ", this.getSessionUser().getAccount());
+		logger.info("分页查询开始：" + qryParamMap);
+		Pager<Bill> p = billDAO.selectByPage(pageNumber, pageSize, qryParamMap);
+		List<Bill> bills = p.getRows();
+		for (Bill bill : bills) {
+			bill.setNameCommodity(commodityDAO.selectByPrimaryKey(bill.getIdCommodity()).getName());
+		}
+		logger.info("分页查询结束，总记录数:" + p.getTotal());
+		return commonBO.buildSuccessResult(Constants.PAGER_RESULT, p);
+	}
+
+	@RequestMapping(value = "/getEvaluationWords")
+	public @ResponseBody AjaxResult myBills(Integer pageNumber, Integer pageSize, int _QRY_id) {
+		Map<String, String> qryParamMap = new HashMap<String, String>();
+		qryParamMap.put("idCommodity", String.valueOf(_QRY_id));
+		qryParamMap.put("state", "已评价");
+		logger.info("分页查询开始：" + qryParamMap);
+		Pager<Bill> p = billDAO.selectByPage(pageNumber, pageSize, qryParamMap);
+		logger.info("分页查询结束，总记录数:" + p.getTotal());
+		return commonBO.buildSuccessResult(Constants.PAGER_RESULT, p);
+	}
+
 	@RequestMapping(value = "/evaluate", method = RequestMethod.GET)
 	public String evaluate(Model model, Integer id) {
 		// 字段检查
@@ -276,11 +277,11 @@ public class BillController extends BaseController {
 		AssertUtil.strIsNotBlank(entity.getEvaluationPrice(), "evaluationPrice is null");
 		AssertUtil.strIsNotBlank(entity.getEvaluationService(), "evaluationService is null");
 		AssertUtil.strIsNotBlank(entity.getEvaluationWords(), "evaluationWords is null");
-		
+
 		// 从数据库查询记录
 		Bill dbentity = billDAO.selectByPrimaryKey(id);
 		AssertUtil.argIsNotNull(dbentity, "账单不存在");
-		
+
 		entity.setState("已评价");
 		entity.setAccountBuyer(this.getSessionUser().getAccount());
 		logger.info(String.format("评价账单开始：%s", BeanUtil.desc(dbentity, null)));
