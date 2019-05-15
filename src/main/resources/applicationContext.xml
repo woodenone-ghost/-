@@ -85,11 +85,12 @@
 					/bill/manage,/bill/qry,/bill/edit,/bill/edit/submit,/bill/delete,/bill/detail"></property>
 				<property name="buyerPermissions"
 					value="/changePassword,/changePassword/submit,/userInformation,/userInformation/submit,
-					/bill/add,/bill/qry,/bill/detail,/bill/delete,/bill/notEvaluateBills,/bill/evaluate,/bill/evaluate/submit"></property>
+					/bill/add,/bill/qry,/bill/detail,/bill/delete,/bill/notEvaluateBills,/bill/evaluate,/bill/evaluate/submit,/bill/notBills,"></property>
 				<property name="sellerPermissions"
 					value="/changePassword,/changePassword/submit,/userInformation,/userInformation/submit,
-					/bill/todayBills,/bill/notEvaluateBills,/bill/badBills,/bill/sellerManage,/bill/qry,/bill/detail,/bill/edit,/bill/edit/submit,/bill/delete,
-					/commodity/add,/commodity/add/submit,/commodity/sellerManage,/commodity/edit,/commodity/edit/submit,/commodity/delete,/commodity/shangjia,/commodity/xiajia"></property>
+					/bill/todayBills,/bill/notEvaluateBills,/bill/badBills,/bill/sellerManage,/bill/qry,/bill/detail,/bill/edit,/bill/edit/submit,/bill/delete,/bill/fahuo,/bill/notBills,
+					/commodity/add,/commodity/add/submit,/commodity/sellerManage,/commodity/edit,/commodity/edit/submit,/commodity/delete,/commodity/shangjia,/commodity/xiajia,
+					/commodity/lineChart,/commodity/lineChart/xianshi,/commodity/barChart,/commodity/pieGraph,"></property>
 			</bean>
 		</mvc:interceptor>
 		<mvc:interceptor>

@@ -27,22 +27,42 @@
 	    					<li class="nav-item">
 	      						<a class="nav-link" href="${ctx}/bill/sellerManage">管 理 账 单</a>
 	    					</li>
-	    					<li class="nav-item">
-	      						<a class="nav-link" href="#">图 表 查 看</a>
-	    					</li>    					
+	    					<li class="nav-item dropdown">
+						    	<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">图 表 查 看</a>
+						    	<div class="dropdown-menu">
+						    		<a class="dropdown-item" href="${ctx}/bill/lineChart">折 线 图</a>
+						      		<a class="dropdown-item" href="${ctx}/bill/barChart">柱 状 图</a>
+						      		<a class="dropdown-item" href="${ctx}/bill/pieGraph">饼 图</a>
+						    	</div>
+						    </li> 					
 	  					</ul>
 				</nav>
 			</div>  			
   			<div class="col-lg-10"> <!-- 网页具体内容 -->
-				<@qryForm id="${entityAbbr}Qry" action="${basePath}/qry">
+				<@qryForm id="${entityAbbr}Qry" action="${basePath}/qry" type="false">
 					<@qryInput fId="id" colClass="col-lg-6" />
-					<@qryInput fId="accountBuyer" colClass="col-lg-6" />
-					<@qryInput fId="idCommodity" colClass="col-lg-6" />
+					<@qryInput fId="name" colClass="col-lg-6" />
+					<div class="col-lg-6 form-inline" style="margin-bottom: 15px;margin-top: 15px;">
+    					<label for="category" class="w-25">${entityConf.fields["category"].fName}:</label>
+				        <select class="form-control" id="category" name="_QRY_category" style="width: 203px;">
+				        	<option></option>
+					        <option>助洁-购物</option>
+					        <option>助洁-打扫</option>
+					        <option>助餐-上门助餐</option>
+					        <option>助餐-老年食堂</option>
+					        <option>助医-护理保健</option>
+					        <option>助医-上门诊治</option>
+					        <option>康乐服务-聊天解闷</option>
+					        <option>康乐服务-文化娱乐</option>
+					        <option>康乐服务-法律帮助</option>
+				        </select>    					
+  					</div>
 				</@qryForm>
 				
 				<div style="position: relative;top: 40px;">
 				<table
-				  id="${entityAbbr}QryTable"
+				  id="QryTable"
+				  data-unique-id="id"
   			      data-toggle="table"
   			      data-pagination="true"
   			      data-side-pagination="server"
@@ -52,13 +72,12 @@
   				  data-click-to-select="true">
   			      <thead>
 				  	<tr>
-				  	  <th data-field="selected" data-checkbox="true"></th>
 				  	  <th data-field="id">${entityConf.fields["id"].fName}</th>
-				      <th data-field="accountBuyer">${entityConf.fields["accountBuyer"].fName}</th>
-				      <th data-field="idCommodity">${entityConf.fields["idCommodity"].fName}</th>
-				      <th data-field="price">${entityConf.fields["price"].fName}</th>
-				      <th data-field="time">${entityConf.fields["time"].fName}</th>
-				      <th data-field="state">${entityConf.fields["state"].fName}</th>
+				      <th data-field="name">${entityConf.fields["name"].fName}</th>
+				      <th data-field="category">${entityConf.fields["category"].fName}</th>				 
+				      <th data-field="shangjia">${entityConf.fields["shangjia"].fName}</th>
+				      <th data-field="control" data-formatter="Formatter">图 表</th>
+				      <th data-field="control1" data-formatter="Formatter1">操 作</th>
 				    </tr>
 				  </thead>			  
 				</table>
@@ -73,6 +92,31 @@
 	<@js_include />
 
 	<script>
+	
+	 	function Formatter(value, row) {   	
+	    	var id1=row.id
+	    	var result="<select class=\"form-control\" id=\""+id1+"_select\">"
+	    	result=result+ "<option>销量-时间-折线图</option><option>好评数-时间-折线图</option><option>差评数-时间-折线图</option></select>"
+	    	return result
+  		}
+  		
+  		function Formatter1(value, row) {   	
+	    	var id1=row.id
+	    	var result="<button type=\"button\" class=\"btn btn-info\" onclick=\"xianshi("+id1+")\">显 示</button>"
+	    	return result
+  		}
+  		
+  		function xianshi(id){
+  			var selected=document.getElementById(id+"_select").value;
+			$.post('${basePath}/lineChart/xianshi', {
+      			id:id,
+      			selected:selected
+    		}, function (data) {
+    			var $mngModal=$("#manageModal");
+    			$mngModal.find(".modal-content").html(data);
+                $mngModal.modal('show');
+    		})
+  		}	
 	
 		jQuery.validator.addMethod("zhengzhengshu", function(value, element) {
 		    var zhengzhengshu =  /^[1-9]\d*$/
@@ -101,7 +145,7 @@
   			
 		$(document).ready(function(){
 			var $qryForm=$("#${entityAbbr}QryForm");
-			var $qryTable=$("#${entityAbbr}QryTable");
+			var $qryTable=$("#QryTable");
 			var $mngModal=$("#manageModal");
 			
 			$qryTable.on('page-change.bs.table', function (e, number, size) {
@@ -132,61 +176,6 @@
 	                error.appendTo(element.parent());
 	            }
         	});
-			
-			<!-- 删除记录代码 -->
-			$("#deleteButton").click(function(){
-				var rows=$qryTable.bootstrapTable('getSelections');
-				if(rows==null||rows.length!=1){
-					alert("请选择一条记录");
-					return;
-				}
-				if(confirm("确认删除?")){
-					$.ajax({
-						url:"${basePath}/delete",
-						data:{
-							id:rows[0].id
-						},
-						method:"post",
-						dataType:"json",
-						success:function(resp){
-							$.dealAjaxResp(resp,function(data){
-								alert("删除成功");
-								$qryForm.submit();
-							});
-						}
-					});
-				}
-			}); 
-			
-            $("#editButton").click(function(){
-                var rows=$qryTable.bootstrapTable('getSelections');
-                if(rows==null||rows.length!=1){
-                    alert("请选择一条记录");
-                    return;
-                }
-                $mngModal.find(".modal-content").empty();
-                var url="${basePath}/edit?id="+rows[0].id;
-                $.get(url,function(data){
-                    $mngModal.find(".modal-content").html(data);
-                    $mngModal.modal('show');
-                });
-            });            
-			
-			<!-- 记录详情代码 -->			
-            $("#detailButton").click(function(){
-                var rows=$qryTable.bootstrapTable('getSelections');
-				if(rows==null||rows.length!=1){
-					alert("请选择一条记录");
-					return;
-				}
-                $mngModal.find(".modal-content").empty();
-                var url="${basePath}/detail?id="+rows[0].id;
-                $.get(url,function(data){
-                    $mngModal.find(".modal-content").html(data);
-                    $mngModal.modal('show');
-                });
-            });			
-			
 			    
 		});
 		

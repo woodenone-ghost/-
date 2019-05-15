@@ -1,11 +1,13 @@
 package zhangjie.dao;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
+import zhangjie.entity.DateAndSalesVolume;
 import zhangjie.mapper.BillMapper;
 import zhangjie.model.Bill;
 import zhangjie.model.BillExample;
@@ -75,6 +77,21 @@ public class BillDAO extends BaseDAO<Bill, BillExample, BillMapper> {
 		return this.getMapper().selectByPrimaryKey(id);
 	}
 
+	public List<DateAndSalesVolume> selectDateAndSalesVolumeById(Integer idCommodity) {
+		AssertUtil.argIsNotNull(idCommodity, "idCommodity is null");
+		return this.getMapper().selectDateAndSalesVolumeById(idCommodity);
+	}
+
+	public List<DateAndSalesVolume> selectGoodEvaluation(Integer idCommdity) {
+		AssertUtil.argIsNotNull(idCommdity, "idCommodity is null");
+		return this.getMapper().selectGoodEvaluation(idCommdity);
+	}
+
+	public List<DateAndSalesVolume> selectBadEvaluation(Integer idCommdity) {
+		AssertUtil.argIsNotNull(idCommdity, "idCommodity is null");
+		return this.getMapper().selectBadEvaluation(idCommdity);
+	}
+
 	@Override
 	protected BillMapper getMapper() {
 		// TODO Auto-generated method stub
@@ -115,7 +132,7 @@ public class BillDAO extends BaseDAO<Bill, BillExample, BillMapper> {
 		}
 		String state = qryParams.get("state");
 		if (StringUtils.isNotBlank(state)) {
-			criteria.andStateEqualTo(state);
+			criteria.andStateLike("%" + state + "%");
 		}
 		String evaluation = qryParams.get("evaluation");
 		if (StringUtils.isNotBlank(evaluation)) {

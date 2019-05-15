@@ -30,6 +30,7 @@ public class CommodityDAO extends BaseDAO<Commodity, CommodityExample, Commodity
 		entity.setSalesVolume(0);
 		entity.setEvaluationPrice(0.0);
 		entity.setEvaluationService(0.0);
+		entity.setShangjia("上架");
 		this.getMapper().insert(entity);
 	}
 

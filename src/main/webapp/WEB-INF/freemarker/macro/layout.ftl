@@ -14,6 +14,7 @@
             <script src="${ctx}/resources/jquery/jquery-3.3.1.min.js"></script>
 			<script src="${ctx}/resources/bootstrap-4.3.1/js/bootstrap.min.js"></script>
 			<script src="${ctx}/resources/raty-master/js/jquery.raty.js"></script>
+			<script src="${ctx}/resources/EChart/echarts.js"></script>
             <script>
             	_ctx="${ctx}";
             </script>

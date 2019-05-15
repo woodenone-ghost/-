@@ -12,7 +12,7 @@
 	<div class="modal-header">
         <h4 class="modal-title" id="modalTitle">${title}</h4>
     </div>
-    <div class="modal-body">
+    <div class="modal-body" id="main" style="width: 700px;height:500px;">
 		<#nested />
 	</div>
     <div class="modal-footer">  	

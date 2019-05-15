@@ -14,7 +14,10 @@
 		
 		  <ul class="nav nav-tabs" role="tablist">
 		    <li class="nav-item">
-		      <a class="nav-link active" data-toggle="tab" href="#bill">未 评 价 账 单</a>
+		      <a class="nav-link active" data-toggle="tab" href="#notbill">未 发 货 账 单</a>
+		    </li>		    
+		    <li class="nav-item">
+		      <a class="nav-link" data-toggle="tab" href="#bill">未 评 价 账 单</a>
 		    </li>
 		    <li class="nav-item">
 		      <a class="nav-link" data-toggle="tab" href="#myBills">我 的 账 单</a>
@@ -22,7 +25,31 @@
 		  </ul>	
 
 		  <div class="tab-content">
-		    <div id="bill" class="container tab-pane active"><br>
+		    <div id="notbill" class="container tab-pane active"><br>
+							<!-- 未发货账单表格展示 -->
+							<table
+							  id="QryTable1"
+			  			      data-toggle="table"
+			  			      data-pagination="true"
+			  			      data-side-pagination="server"
+			  			      data-query-params-type=''
+			  				  data-url="${ctx}/bill/notBills"
+			  				  data-response-handler="responseHandler">
+			  			      <thead>
+							  	<tr>
+							      <th data-field="id">${entityConf.fields["id"].fName}</th>
+							      <th data-field="accountSeller">${entityConf.fields["accountSeller"].fName}</th>
+							      <th data-field="nameCommodity">商品名称</th>
+							      <th data-field="quantity">${entityConf.fields["quantity"].fName}</th>
+							      <th data-field="price">${entityConf.fields["price"].fName}</th>
+							      <th data-field="state">${entityConf.fields["state"].fName}</th>
+							      <th data-field="control" data-formatter="Formatter">操作</th>
+							    </tr>
+							  </thead>			  
+							</table>
+		    </div>
+		  
+		    <div id="bill" class="container tab-pane"><br>
 							<!-- 未评价账单表格展示 -->
 							<table
 							  id="QryTable"
@@ -100,9 +127,14 @@
 	    					<li class="nav-item">
 	      						<a class="nav-link" href="${ctx}/bill/sellerManage">管 理 账 单</a>
 	    					</li>
-	    					<li class="nav-item">
-	      						<a class="nav-link" href="#">图 表 查 看</a>
-	    					</li>    					
+	    					<li class="nav-item dropdown">
+						    	<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">图 表 查 看</a>
+						    	<div class="dropdown-menu">
+						    		<a class="dropdown-item" href="${ctx}/commodity/lineChart">折 线 图</a>
+						      		<a class="dropdown-item" href="${ctx}/commodity/barChart">柱 状 图</a>
+						      		<a class="dropdown-item" href="${ctx}/commodity/pieGraph">饼 图</a>
+						    	</div>
+						    </li>   					
 	  					</ul>
 					</nav>
 				</div> 
@@ -141,21 +173,21 @@
 							      <th data-field="quantity">${entityConf.fields["quantity"].fName}</th>
 							      <th data-field="price">${entityConf.fields["price"].fName}</th>
 							      <th data-field="state">${entityConf.fields["state"].fName}</th>
-							      <th data-field="control" data-formatter="Formatter">操作</th>
+							      <th data-field="control" data-formatter="Formatter2">操作</th>
 							    </tr>
 							  </thead>			  
 							</table>
 	    				</div>
 	    				
 	    				<div id="bills" class="container tab-pane fade"><br>
-							<!-- 未评价账单表格展示 -->
+							<!-- 未发货账单表格展示 -->
 							<table
 							  id="QryTable1"
 			  			      data-toggle="table"
 			  			      data-pagination="true"
 			  			      data-side-pagination="server"
 			  			      data-query-params-type=''
-			  				  data-url="${ctx}/bill/notEvaluateBills"
+			  				  data-url="${ctx}/bill/notBills"
 			  				  data-response-handler="responseHandler"		  				  
   							  }
 			  				  >
@@ -168,7 +200,7 @@
 							      <th data-field="price">${entityConf.fields["price"].fName}</th>
 							      <th data-field="time">${entityConf.fields["time"].fName}</th>
 							      <th data-field="state">${entityConf.fields["state"].fName}</th>
-							      <th data-field="control" data-formatter="Formatter">操作</th>
+							      <th data-field="control" data-formatter="Formatter3">操作</th>
 							    </tr>
 							  </thead>			  
 							</table>
@@ -194,7 +226,7 @@
 							      <th data-field="quantity">${entityConf.fields["quantity"].fName}</th>
 							      <th data-field="price">${entityConf.fields["price"].fName}</th>
 							      <th data-field="time">${entityConf.fields["time"].fName}</th>
-							      <th data-field="control" data-formatter="Formatter">操作</th>
+							      <th data-field="control" data-formatter="Formatter2">操作</th>
 							    </tr>
 							  </thead>			  
 							</table>
@@ -220,13 +252,28 @@
 		
 	 	function Formatter(value, row) {   	
 	    	var id1=row.id
-	    	var result="<button type=\"button\" id=\"detailButton\" class=\"btn btn-info\" onclick=\"detail("+id1+")\">详 情</button>"
+	    	var result="<button type=\"button\" class=\"btn btn-info\" onclick=\"chexiao("+id1+")\">撤 销</button>"
+	    	result=result+" "+"<button type=\"button\" id=\"detailButton\" class=\"btn btn-primary\" onclick=\"detail("+id1+")\">详 情</button>"
 	    	return result
   		}
   		
   		function Formatter1(value, row) {   	
 	    	var id1=row.id
 	    	var result="<button type=\"button\" class=\"btn btn-info\" onclick=\"evaluate1("+id1+")\">评 价</button>"
+	    	result=result+" "+"<button type=\"button\" id=\"detailButton\" class=\"btn btn-primary\" onclick=\"detail("+id1+")\">详 情</button>"
+	    	return result
+  		}  		
+  		
+  		function Formatter2(value, row) {   	
+	    	var id1=row.id
+	    	var result="<button type=\"button\" id=\"detailButton\" class=\"btn btn-info\" onclick=\"detail("+id1+")\">详 情</button>"
+	    	return result
+  		}
+  		
+	 	function Formatter3(value, row) {   	
+	    	var id1=row.id
+	    	var result="<button type=\"button\" class=\"btn btn-info\" onclick=\"fahuo("+id1+")\">发 货</button>"
+	    	result=result+" "+"<button type=\"button\" class=\"btn btn-danger\" onclick=\"chexiao("+id1+")\">撤 销</button>"
 	    	result=result+" "+"<button type=\"button\" id=\"detailButton\" class=\"btn btn-primary\" onclick=\"detail("+id1+")\">详 情</button>"
 	    	return result
   		}
@@ -240,6 +287,30 @@
              	$mngModal.find(".modal-content").html(data);
              	$mngModal.modal('show');
              });
+  		}
+  		
+  		function fahuo(id){
+  			 if(confirm("确认发货？")){
+	  			 var url="${ctx}/bill/fahuo?id="+id;
+	             $.get(url,function(data){
+				 	if(data.code==00){
+				 		alert("发货成功！");
+				 		location.reload(true);
+				 	}
+	             });
+  			 }
+  		}
+  		
+  		function chexiao(id){
+  			 if(confirm("确认撤销订单？")){
+	  			 var url="${ctx}/bill/delete?id="+id;
+	             $.post(url,function(data){
+				 	if(data.code==00){
+				 		alert("撤销成功！");
+				 		location.reload(true);
+				 	}
+	             });
+  			 }
   		}
   		
   		function evaluate1(id){

@@ -3,7 +3,9 @@ package zhangjie.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -21,8 +23,10 @@ import org.springframework.web.multipart.MultipartFile;
 import zhangjie.bo.EntityTransformer;
 import zhangjie.cache.EntityConfigCache;
 import zhangjie.constants.Constants;
+import zhangjie.dao.BillDAO;
 import zhangjie.dao.CommodityDAO;
 import zhangjie.entity.AjaxResult;
+import zhangjie.entity.DateAndSalesVolume;
 import zhangjie.entity.Pager;
 import zhangjie.model.Commodity;
 import zhangjie.util.AssertUtil;
@@ -44,6 +48,8 @@ public class CommodityController extends BaseController {
 
 	@Autowired
 	private CommodityDAO commodityDAO;
+	@Autowired
+	private BillDAO billDAO;
 
 	@RequestMapping(value = "/manage", method = RequestMethod.GET)
 	public String manage(Model model) {
@@ -282,5 +288,65 @@ public class CommodityController extends BaseController {
 		model.addAttribute(Constants.ENTITY_RESULT, entity);
 		model.addAttribute(Constants.ENTITY_CONF, EntityConfigCache.get(Constants.ENTITY_COMMODITY));
 		return "commodity/detail";
+	}
+
+	@RequestMapping(value = "/lineChart", method = RequestMethod.GET)
+	public String lineChart(Model model) {
+		model.addAttribute(Constants.ENTITY_CONF, EntityConfigCache.get(Constants.ENTITY_COMMODITY));
+		return "commodity/lineChart";
+	}
+
+	@RequestMapping(value = "/lineChart/xianshi", method = RequestMethod.POST)
+	public String lineChart_xianshi(Model model, Integer id, String selected) {
+		// 字段检查
+		AssertUtil.argIsNotNull(id, "id is null");
+		AssertUtil.strIsNotBlank(selected, "selected is null");
+
+		List<DateAndSalesVolume> list = billDAO.selectDateAndSalesVolumeById(id);
+		Commodity commodity = commodityDAO.selectByPrimaryKey(id);
+
+		model.addAttribute("commodity", commodity);
+		model.addAttribute("selected", selected);
+
+		List<DateAndSalesVolume> list2 = new ArrayList<DateAndSalesVolume>();
+		logger.info(list);
+		if (selected.equals("好评数-时间-折线图")) {
+			List<DateAndSalesVolume> list1 = billDAO.selectGoodEvaluation(id);
+			for (int i = 0; i < list.size(); i++) {
+				DateAndSalesVolume dateAndSalesVolume = new DateAndSalesVolume();
+				dateAndSalesVolume.setTime(list.get(i).getTime());
+				dateAndSalesVolume.setSalesVolume(list.get(i).getSalesVolume());
+				dateAndSalesVolume.setEvaluationNumber(list1.get(i).getEvaluationNumber());
+				list2.add(dateAndSalesVolume);
+			}
+			model.addAttribute("list1", list2);
+			return "commodity/lineChart_xianshi";
+		} else if (selected.equals("差评数-时间-折线图")) {
+			List<DateAndSalesVolume> list1 = billDAO.selectBadEvaluation(id);
+			for (int i = 0; i < list.size(); i++) {
+				DateAndSalesVolume dateAndSalesVolume = new DateAndSalesVolume();
+				dateAndSalesVolume.setTime(list.get(i).getTime());
+				dateAndSalesVolume.setSalesVolume(list.get(i).getSalesVolume());
+				dateAndSalesVolume.setEvaluationNumber(list1.get(i).getEvaluationNumber());
+				list2.add(dateAndSalesVolume);
+			}
+			model.addAttribute("list1", list2);
+			return "commodity/lineChart_xianshi";
+		}
+
+		model.addAttribute("list1", list);
+		return "commodity/lineChart_xianshi";
+	}
+
+	@RequestMapping(value = "/barChart", method = RequestMethod.GET)
+	public String barChart(Model model) {
+		model.addAttribute(Constants.ENTITY_CONF, EntityConfigCache.get(Constants.ENTITY_COMMODITY));
+		return "commodity/barChart";
+	}
+
+	@RequestMapping(value = "/pieGraph", method = RequestMethod.GET)
+	public String pieGraph(Model model) {
+		model.addAttribute(Constants.ENTITY_CONF, EntityConfigCache.get(Constants.ENTITY_COMMODITY));
+		return "commodity/pieGraph";
 	}
 }
