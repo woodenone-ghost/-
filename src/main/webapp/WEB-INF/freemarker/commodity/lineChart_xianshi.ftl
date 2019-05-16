@@ -19,11 +19,11 @@
             },
 		    legend: {
 		    	<#if selected == "销量-时间-折线图">
-		    		data:['销量']
+		    		data:['销量',"交易数"]
 		    	<#elseif selected == "好评数-时间-折线图">
-		    		data:['销量','好评数']
+		    		data:['销量',"交易数",'好评数']
 		    	<#elseif selected == "差评数-时间-折线图">
-		    		data:['销量','差评数']
+		    		data:['销量',"交易数",'差评数']
 		    	</#if>
 		    },
 		    tooltip: {trigger: 'axis'},
@@ -44,16 +44,24 @@
 		    	type: 'line',
 		    	name:'销量',
 		        data: [<#list list1 as a>${a.salesVolume},</#list>]		        
-		    }
+		    },
+		    {
+		    	type: 'line',
+		    	areaStyle: {},
+		    	name:'交易数',
+		        data: [<#list list1 as a>${a.billNumber},</#list>]		        
+		    }		    
 		    <#if selected == "好评数-时间-折线图">
 			    ,{
 			    	type: 'line',
+			    	areaStyle: {},
 			    	name:'好评数',
 			        data: [<#list list1 as a>${a.evaluationNumber},</#list>]		        
 			    }		    
 		    <#elseif selected == "差评数-时间-折线图">
 			    ,{
 			    	type: 'line',
+			    	areaStyle: {},
 			    	name:'差评数',
 			        data: [<#list list1 as a>${a.evaluationNumber},</#list>]		        
 			    }			    

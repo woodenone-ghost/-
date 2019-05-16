@@ -6,13 +6,22 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class DateAndSalesVolume {
+public class LineChart {
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT-8")
 	private Date time;
 	private Integer salesVolume;
 	private int evaluationNumber;
+	private int billNumber;
+
+	public int getBillNumber() {
+		return billNumber;
+	}
+
+	public void setBillNumber(int billNumber) {
+		this.billNumber = billNumber;
+	}
 
 	public int getEvaluationNumber() {
 		return evaluationNumber;

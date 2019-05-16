@@ -321,6 +321,7 @@ public class BillController extends BaseController {
 		AssertUtil.argIsNotNull(entity, "账单不存在");
 
 		entity.setState(Constants.WEIPINJIA);
+		entity.setEvaluation("好评");
 		logger.info(String.format("发货开始：%s", BeanUtil.desc(entity, null)));
 		billDAO.update(entity);
 		logger.info(String.format("发货结束：%s", BeanUtil.desc(entity, null)));

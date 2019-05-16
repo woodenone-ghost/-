@@ -26,8 +26,9 @@ import zhangjie.constants.Constants;
 import zhangjie.dao.BillDAO;
 import zhangjie.dao.CommodityDAO;
 import zhangjie.entity.AjaxResult;
-import zhangjie.entity.DateAndSalesVolume;
+import zhangjie.entity.LineChart;
 import zhangjie.entity.Pager;
+import zhangjie.entity.PieGraph;
 import zhangjie.model.Commodity;
 import zhangjie.util.AssertUtil;
 import zhangjie.util.BeanUtil;
@@ -302,32 +303,42 @@ public class CommodityController extends BaseController {
 		AssertUtil.argIsNotNull(id, "id is null");
 		AssertUtil.strIsNotBlank(selected, "selected is null");
 
-		List<DateAndSalesVolume> list = billDAO.selectDateAndSalesVolumeById(id);
+		List<LineChart> list = billDAO.selectDateAndSalesVolumeById(id);
 		Commodity commodity = commodityDAO.selectByPrimaryKey(id);
 
 		model.addAttribute("commodity", commodity);
 		model.addAttribute("selected", selected);
 
-		List<DateAndSalesVolume> list2 = new ArrayList<DateAndSalesVolume>();
+		List<LineChart> list2 = new ArrayList<LineChart>();
 		logger.info(list);
 		if (selected.equals("好评数-时间-折线图")) {
-			List<DateAndSalesVolume> list1 = billDAO.selectGoodEvaluation(id);
+			List<LineChart> list1 = billDAO.selectGoodEvaluation(id);
 			for (int i = 0; i < list.size(); i++) {
-				DateAndSalesVolume dateAndSalesVolume = new DateAndSalesVolume();
+				LineChart dateAndSalesVolume = new LineChart();
 				dateAndSalesVolume.setTime(list.get(i).getTime());
 				dateAndSalesVolume.setSalesVolume(list.get(i).getSalesVolume());
-				dateAndSalesVolume.setEvaluationNumber(list1.get(i).getEvaluationNumber());
+				dateAndSalesVolume.setBillNumber(list.get(i).getBillNumber());
+				if (i >= list1.size()) {
+					dateAndSalesVolume.setEvaluationNumber(0);
+				} else {
+					dateAndSalesVolume.setEvaluationNumber(list1.get(i).getEvaluationNumber());
+				}
 				list2.add(dateAndSalesVolume);
 			}
 			model.addAttribute("list1", list2);
 			return "commodity/lineChart_xianshi";
 		} else if (selected.equals("差评数-时间-折线图")) {
-			List<DateAndSalesVolume> list1 = billDAO.selectBadEvaluation(id);
+			List<LineChart> list1 = billDAO.selectBadEvaluation(id);
 			for (int i = 0; i < list.size(); i++) {
-				DateAndSalesVolume dateAndSalesVolume = new DateAndSalesVolume();
+				LineChart dateAndSalesVolume = new LineChart();
 				dateAndSalesVolume.setTime(list.get(i).getTime());
 				dateAndSalesVolume.setSalesVolume(list.get(i).getSalesVolume());
-				dateAndSalesVolume.setEvaluationNumber(list1.get(i).getEvaluationNumber());
+				dateAndSalesVolume.setBillNumber(list.get(i).getBillNumber());
+				if (i >= list1.size()) {
+					dateAndSalesVolume.setEvaluationNumber(0);
+				} else {
+					dateAndSalesVolume.setEvaluationNumber(list1.get(i).getEvaluationNumber());
+				}
 				list2.add(dateAndSalesVolume);
 			}
 			model.addAttribute("list1", list2);
@@ -348,5 +359,79 @@ public class CommodityController extends BaseController {
 	public String pieGraph(Model model) {
 		model.addAttribute(Constants.ENTITY_CONF, EntityConfigCache.get(Constants.ENTITY_COMMODITY));
 		return "commodity/pieGraph";
+	}
+
+	@RequestMapping(value = "/pieGraph/xianshi", method = RequestMethod.POST)
+	public String pieGraph_xianshi(Model model, Integer id, String selected) {
+		// 字段检查
+		AssertUtil.argIsNotNull(id, "id is null");
+		AssertUtil.strIsNotBlank(selected, "selected is null");
+
+		Commodity commodity = commodityDAO.selectByPrimaryKey(id);
+
+		if (selected.equals("男女比例-饼图")) {
+			List<PieGraph> list = billDAO.selectSex(id);
+			int maleNumber = 0;
+			int femaleNumber = 0;
+			for (PieGraph pieGraph : list) {
+				if (pieGraph.getSex().equals("男")) {
+					maleNumber++;
+				} else {
+					femaleNumber++;
+				}
+			}
+			model.addAttribute("maleNumber", maleNumber);
+			model.addAttribute("femaleNumber", femaleNumber);
+		} else if (selected.equals("年龄分布-饼图")) {
+			List<PieGraph> list = billDAO.selectAge(id);
+			int age_49 = 0;
+			int age_50_59 = 0;
+			int age_60_69 = 0;
+			int age_70_79 = 0;
+			int age_80_89 = 0;
+			int age_90_99 = 0;
+			for (PieGraph pieGraph : list) {
+				int age = pieGraph.getAge();
+				if (age < 50) {
+					age_49++;
+				} else if (age < 60 && age >= 50) {
+					age_50_59++;
+				} else if (age < 70 && age >= 60) {
+					age_60_69++;
+				} else if (age < 80 && age >= 70) {
+					age_70_79++;
+				} else if (age < 90 && age >= 80) {
+					age_80_89++;
+				} else if (age >= 90) {
+					age_90_99++;
+				}
+			}
+			model.addAttribute("age_49", age_49);
+			model.addAttribute("age_50_59", age_50_59);
+			model.addAttribute("age_60_69", age_60_69);
+			model.addAttribute("age_70_79", age_70_79);
+			model.addAttribute("age_80_89", age_80_89);
+			model.addAttribute("age_90_99", age_90_99);
+		} else if (selected.equals("评价分布-饼图")) {
+			List<PieGraph> list = billDAO.selectEvaluation(id);
+			int goodNumber = 0;
+			int normalNumber = 0;
+			int badNumber = 0;
+			for (PieGraph pieGraph : list) {
+				if (pieGraph.getEvaluation().equals("好评")) {
+					goodNumber++;
+				} else if (pieGraph.getEvaluation().equals("中评")) {
+					normalNumber++;
+				} else if (pieGraph.getEvaluation().equals("差评")) {
+					badNumber++;
+				}
+			}
+			model.addAttribute("goodNumber", goodNumber);
+			model.addAttribute("normalNumber", normalNumber);
+			model.addAttribute("badNumber", badNumber);
+		}
+		model.addAttribute("commodity", commodity);
+		model.addAttribute("selected", selected);
+		return "commodity/pieGraph_xianshi";
 	}
 }

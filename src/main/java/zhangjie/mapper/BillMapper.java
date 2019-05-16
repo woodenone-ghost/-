@@ -6,7 +6,8 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
-import zhangjie.entity.DateAndSalesVolume;
+import zhangjie.entity.LineChart;
+import zhangjie.entity.PieGraph;
 import zhangjie.model.Bill;
 import zhangjie.model.BillExample;
 
@@ -99,9 +100,15 @@ public interface BillMapper {
 	 */
 	int updateByPrimaryKey(Bill record);
 
-	List<DateAndSalesVolume> selectDateAndSalesVolumeById(Integer idCommdity);
+	List<LineChart> selectDateAndSalesVolumeById(Integer idCommdity);
 
-	List<DateAndSalesVolume> selectGoodEvaluation(Integer idCommdity);
+	List<LineChart> selectGoodEvaluation(Integer idCommdity);
 
-	List<DateAndSalesVolume> selectBadEvaluation(Integer idCommdity);
+	List<LineChart> selectBadEvaluation(Integer idCommdity);
+
+	List<PieGraph> selectSex(Integer idCommdity);
+
+	List<PieGraph> selectAge(Integer idCommdity);
+
+	List<PieGraph> selectEvaluation(Integer idCommdity);
 }

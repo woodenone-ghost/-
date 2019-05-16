@@ -7,7 +7,8 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
-import zhangjie.entity.DateAndSalesVolume;
+import zhangjie.entity.LineChart;
+import zhangjie.entity.PieGraph;
 import zhangjie.mapper.BillMapper;
 import zhangjie.model.Bill;
 import zhangjie.model.BillExample;
@@ -77,19 +78,34 @@ public class BillDAO extends BaseDAO<Bill, BillExample, BillMapper> {
 		return this.getMapper().selectByPrimaryKey(id);
 	}
 
-	public List<DateAndSalesVolume> selectDateAndSalesVolumeById(Integer idCommodity) {
+	public List<LineChart> selectDateAndSalesVolumeById(Integer idCommodity) {
 		AssertUtil.argIsNotNull(idCommodity, "idCommodity is null");
 		return this.getMapper().selectDateAndSalesVolumeById(idCommodity);
 	}
 
-	public List<DateAndSalesVolume> selectGoodEvaluation(Integer idCommdity) {
+	public List<LineChart> selectGoodEvaluation(Integer idCommdity) {
 		AssertUtil.argIsNotNull(idCommdity, "idCommodity is null");
 		return this.getMapper().selectGoodEvaluation(idCommdity);
 	}
 
-	public List<DateAndSalesVolume> selectBadEvaluation(Integer idCommdity) {
+	public List<LineChart> selectBadEvaluation(Integer idCommdity) {
 		AssertUtil.argIsNotNull(idCommdity, "idCommodity is null");
 		return this.getMapper().selectBadEvaluation(idCommdity);
+	}
+
+	public List<PieGraph> selectSex(Integer idCommdity) {
+		AssertUtil.argIsNotNull(idCommdity, "idCommodity is null");
+		return this.getMapper().selectSex(idCommdity);
+	}
+
+	public List<PieGraph> selectAge(Integer idCommdity) {
+		AssertUtil.argIsNotNull(idCommdity, "idCommodity is null");
+		return this.getMapper().selectAge(idCommdity);
+	}
+
+	public List<PieGraph> selectEvaluation(Integer idCommdity) {
+		AssertUtil.argIsNotNull(idCommdity, "idCommodity is null");
+		return this.getMapper().selectEvaluation(idCommdity);
 	}
 
 	@Override
