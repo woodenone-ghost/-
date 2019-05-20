@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
+import zhangjie.entity.BarChart;
 import zhangjie.entity.LineChart;
 import zhangjie.entity.PieGraph;
 import zhangjie.mapper.BillMapper;
@@ -106,6 +107,11 @@ public class BillDAO extends BaseDAO<Bill, BillExample, BillMapper> {
 	public List<PieGraph> selectEvaluation(Integer idCommdity) {
 		AssertUtil.argIsNotNull(idCommdity, "idCommodity is null");
 		return this.getMapper().selectEvaluation(idCommdity);
+	}
+
+	public List<BarChart> selectAgeForBarChart(Integer idCommdity) {
+		AssertUtil.argIsNotNull(idCommdity, "idCommodity is null");
+		return this.getMapper().selectAgeForBarChart(idCommdity);
 	}
 
 	@Override

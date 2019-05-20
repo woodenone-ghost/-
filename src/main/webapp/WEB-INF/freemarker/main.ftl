@@ -183,6 +183,7 @@
 							<!-- 未发货账单表格展示 -->
 							<table
 							  id="QryTable1"
+							  data-unique-id="id"
 			  			      data-toggle="table"
 			  			      data-pagination="true"
 			  			      data-side-pagination="server"
@@ -295,7 +296,8 @@
 	             $.get(url,function(data){
 				 	if(data.code==00){
 				 		alert("发货成功！");
-				 		location.reload(true);
+				 		var $qryTable=$("#QryTable1");
+				 		 $qryTable.bootstrapTable('removeByUniqueId', id);
 				 	}
 	             });
   			 }

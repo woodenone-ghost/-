@@ -30,9 +30,9 @@
 	    					<li class="nav-item dropdown">
 						    	<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">图 表 查 看</a>
 						    	<div class="dropdown-menu">
-						    		<a class="dropdown-item" href="${ctx}/bill/lineChart">折 线 图</a>
-						      		<a class="dropdown-item" href="${ctx}/bill/barChart">柱 状 图</a>
-						      		<a class="dropdown-item" href="${ctx}/bill/pieGraph">饼 图</a>
+						    		<a class="dropdown-item" href="${ctx}/commodity/lineChart">折 线 图</a>
+						      		<a class="dropdown-item" href="${ctx}/commodity/barChart">柱 状 图</a>
+						      		<a class="dropdown-item" href="${ctx}/commodity/pieGraph">饼 图</a>
 						    	</div>
 						    </li> 					
 	  					</ul>

@@ -462,4 +462,15 @@
     WHERE id_commodity = #{id_commodity,jdbcType=INTEGER} and state like '已%'
   </select>
   
+  
+  <resultMap id="barChart" type="zhangjie.entity.BarChart">
+	<result column="age_buyer" property="age" />
+  </resultMap>
+  
+  <select id="selectAgeForBarChart" parameterType="java.lang.Integer" resultMap="barChart">
+    SELECT
+    age_buyer
+    FROM bill,buyer,userinformation
+    WHERE id_commodity = #{id_commodity,jdbcType=INTEGER} AND bill.account_buyer=userinformation.account AND userinformation.id=id_buyer 
+  </select>
 </mapper>

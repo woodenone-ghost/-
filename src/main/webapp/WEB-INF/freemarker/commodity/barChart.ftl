@@ -14,10 +14,10 @@
 		<div class="row" style="height:830px;">
   			<div class="col-lg-2"> <!-- 左侧导航栏 -->
 				<nav class="navbar bg-light navbar-light h-100">
-  					<ul class="navbar-nav" style="position: relative;left: 30px;bottom: 300px;">
-	    					<li class="nav-item">			
-      							<a class="nav-link " href="${ctx}/loginout">登 出</a>
-    					    </li>  						
+	  					<ul class="navbar-nav" style="position: relative;left: 30px;bottom: 300px;">
+							<li class="nav-item">			
+	      						<a class="nav-link " href="${ctx}/loginout">登 出</a>
+	    					</li>
 	    					<li class="nav-item">			
 	      						<a class="nav-link " href="${ctx}/commodity/add">增 加 商 品</a>
 	    					</li>
@@ -34,12 +34,12 @@
 						      		<a class="dropdown-item" href="${ctx}/commodity/barChart">柱 状 图</a>
 						      		<a class="dropdown-item" href="${ctx}/commodity/pieGraph">饼 图</a>
 						    	</div>
-						    </li>  					
-  					</ul>
+						    </li> 					
+	  					</ul>
 				</nav>
 			</div>  			
   			<div class="col-lg-10"> <!-- 网页具体内容 -->
-				<@qryForm id="${entityAbbr}Qry" action="${basePath}/qry">
+				<@qryForm id="${entityAbbr}Qry" action="${basePath}/qry" type="false">
 					<@qryInput fId="id" colClass="col-lg-6" />
 					<@qryInput fId="name" colClass="col-lg-6" />
 					<div class="col-lg-6 form-inline" style="margin-bottom: 15px;margin-top: 15px;">
@@ -61,7 +61,7 @@
 				
 				<div style="position: relative;top: 40px;">
 				<table
-				  id="${entityAbbr}QryTable"
+				  id="QryTable"
 				  data-unique-id="id"
   			      data-toggle="table"
   			      data-pagination="true"
@@ -72,16 +72,12 @@
   				  data-click-to-select="true">
   			      <thead>
 				  	<tr>
-				  	  <th data-field="selected" data-checkbox="true"></th>
 				  	  <th data-field="id">${entityConf.fields["id"].fName}</th>
 				      <th data-field="name">${entityConf.fields["name"].fName}</th>
-				      <th data-field="price">${entityConf.fields["price"].fName}</th>
 				      <th data-field="category">${entityConf.fields["category"].fName}</th>				 
-				      <th data-field="salesVolume">${entityConf.fields["salesVolume"].fName}</th>
-				      <th data-field="evaluationPrice">${entityConf.fields["evaluationPrice"].fName}</th>
-				      <th data-field="evaluationService">${entityConf.fields["evaluationService"].fName}</th>
 				      <th data-field="shangjia">${entityConf.fields["shangjia"].fName}</th>
-				      <th data-field="control" data-formatter="Formatter">操作</th>
+				      <th data-field="control" data-formatter="Formatter">图 表</th>
+				      <th data-field="control1" data-formatter="Formatter1">操 作</th>
 				    </tr>
 				  </thead>			  
 				</table>
@@ -96,45 +92,41 @@
 	<@js_include />
 
 	<script>
-
+	
 	 	function Formatter(value, row) {   	
 	    	var id1=row.id
-	    	var result="<button type=\"button\" class=\"btn btn-info\" onclick=\"shangjia("+id1+")\">上 架</button>"
-	    	result=result+" "+"<button type=\"button\" id=\"detailButton\" class=\"btn btn-danger\" onclick=\"xiajia("+id1+")\">下 架</button>"
+	    	var result="<select class=\"form-control\" id=\""+id1+"_select\">"
+	    	result=result+ "<option>年龄分布-柱状图</option><option>上月销量-柱状图</option><option>所有产品销量-柱状图</option></select>"
 	    	return result
   		}
   		
-  		function shangjia(id){
-             var url="${ctx}/commodity/shangjia?id="+id;
-             var $qryTable=$("#${entityAbbr}QryTable");
-             $.get(url,function(data){
-             	alert("上架成功!");
-             	var row = $qryTable.bootstrapTable('getRowByUniqueId', id);
-             	row.shangjia="上架";
-             	$qryTable.bootstrapTable('updateByUniqueId', {id: id, row: row})
-             });
-  		}  	
+  		function Formatter1(value, row) {   	
+	    	var id1=row.id
+	    	var result="<button type=\"button\" class=\"btn btn-info\" onclick=\"xianshi("+id1+")\">显 示</button>"
+	    	return result
+  		}
   		
-  		function xiajia(id){
-             var url="${ctx}/commodity/xiajia?id="+id;
-             var $qryTable=$("#${entityAbbr}QryTable");
-             $.get(url,function(data){
-             	alert("下架成功!");
-             	var row = $qryTable.bootstrapTable('getRowByUniqueId', id);
-             	row.shangjia="下架";
-             	$qryTable.bootstrapTable('updateByUniqueId', {id: id, row: row})
-             });
-  		} 	
+  		function xianshi(id){
+  			var selected=document.getElementById(id+"_select").value;
+			$.post('${basePath}/barChart/xianshi', {
+      			id:id,
+      			selected:selected
+    		}, function (data) {
+    			var $mngModal=$("#manageModal");
+    			$mngModal.find(".modal-content").html(data);
+                $mngModal.modal('show');
+    		})
+  		}	
 	
 		jQuery.validator.addMethod("zhengzhengshu", function(value, element) {
-			var zhengzhengshu =  /^[1-9]\d*$/
-			return this.optional(element) || (zhengzhengshu.test(value));
+		    var zhengzhengshu =  /^[1-9]\d*$/
+		    return this.optional(element) || (zhengzhengshu.test(value));
 		}, "请输入正确的内容");
 		
 		function queryParams(params) {
 			params._QRY_id = $("#id").val()
-    		params._QRY_name = $("#name").val()
-    		params._QRY_category = $("#category").val()
+    		params._QRY_accountBuyer = $("#accountBuyer").val()
+    		params._QRY_idCommodity = $("#idCommodity").val()
     		return params
   		}
   		
@@ -143,8 +135,8 @@
       			pageNumber: number,
       			pageSize: size,
       			_QRY_id : $("#id").val(),
-      			_QRY_name : $("#name").val(),
-      			_QRY_category : $("#category").val(),
+      			_QRY_accountBuyer : $("#accountBuyer").val(),
+      			_QRY_idCommodity : $("#idCommodity").val(),
     		}, function (data) {
     		var $qryTable=$("#${entityAbbr}QryTable");
       		$qryTable.bootstrapTable("load", data.data.pager)
@@ -153,7 +145,7 @@
   			
 		$(document).ready(function(){
 			var $qryForm=$("#${entityAbbr}QryForm");
-			var $qryTable=$("#${entityAbbr}QryTable");
+			var $qryTable=$("#QryTable");
 			var $mngModal=$("#manageModal");
 			
 			$qryTable.on('page-change.bs.table', function (e, number, size) {
@@ -164,8 +156,8 @@
 			$qryForm.validate({
 				rules:{
 					_QRY_id: {zhengzhengshu:true},
-					_QRY_name: {maxlength:32},	
-					_QRY_category: {maxlength:16}
+					_QRY_accountBuyer: {zhengzhengshu:32},	
+					_QRY_idCommodity: {zhengzhengshu:true},
 				},
 	        	submitHandler:function(form){
 	            	$("#qryButton").attr("disabled","disabled");
@@ -184,56 +176,7 @@
 	                error.appendTo(element.parent());
 	            }
         	});
-			
-			<!-- 删除记录代码 -->
-			$("#deleteButton").click(function(){
-				var rows=$qryTable.bootstrapTable('getSelections');
-				if(rows==null||rows.length!=1){
-					alert("请选择一条记录");
-					return;
-				}
-				if(confirm("确认删除?")){
-					$.ajax({
-						url:"${basePath}/delete",
-						data:{
-							id:rows[0].id
-						},
-						method:"post",
-						dataType:"json",
-						success:function(resp){
-							$.dealAjaxResp(resp,function(data){
-								alert("删除成功");
-								$qryForm.submit();
-							});
-						}
-					});
-				}
-			}); 
-			
-            $("#editButton").click(function(){
-                var rows=$qryTable.bootstrapTable('getSelections');
-                if(rows==null||rows.length!=1){
-                    alert("请选择一条记录");
-                    return;
-                }
-                $mngModal.find(".modal-content").empty();
-                var url="${basePath}/edit?id="+rows[0].id;
-                $.get(url,function(data){
-                    $mngModal.find(".modal-content").html(data);
-                    $mngModal.modal('show');
-                });
-            });            
-			
-			<!-- 记录详情代码 -->			
-            $("#detailButton").click(function(){
-                var rows=$qryTable.bootstrapTable('getSelections');
-				if(rows==null||rows.length!=1){
-					alert("请选择一条记录");
-					return;
-				}
-                var url="${basePath}/detail?id="+rows[0].id;
-				window.open(url);
-            });			
+			    
 		});
 		
 	

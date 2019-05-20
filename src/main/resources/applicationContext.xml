@@ -90,7 +90,7 @@
 					value="/changePassword,/changePassword/submit,/userInformation,/userInformation/submit,
 					/bill/todayBills,/bill/notEvaluateBills,/bill/badBills,/bill/sellerManage,/bill/qry,/bill/detail,/bill/edit,/bill/edit/submit,/bill/delete,/bill/fahuo,/bill/notBills,
 					/commodity/add,/commodity/add/submit,/commodity/sellerManage,/commodity/edit,/commodity/edit/submit,/commodity/delete,/commodity/shangjia,/commodity/xiajia,
-					/commodity/lineChart,/commodity/lineChart/xianshi,/commodity/barChart,/commodity/pieGraph,/commodity/pieGraph/xianshi"></property>
+					/commodity/lineChart,/commodity/lineChart/xianshi,/commodity/barChart,/commodity/barChart/xianshi,/commodity/pieGraph,/commodity/pieGraph/xianshi"></property>
 			</bean>
 		</mvc:interceptor>
 		<mvc:interceptor>

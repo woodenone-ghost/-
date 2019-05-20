@@ -26,6 +26,7 @@ import zhangjie.constants.Constants;
 import zhangjie.dao.BillDAO;
 import zhangjie.dao.CommodityDAO;
 import zhangjie.entity.AjaxResult;
+import zhangjie.entity.BarChart;
 import zhangjie.entity.LineChart;
 import zhangjie.entity.Pager;
 import zhangjie.entity.PieGraph;
@@ -355,6 +356,90 @@ public class CommodityController extends BaseController {
 		return "commodity/barChart";
 	}
 
+	@RequestMapping(value = "/barChart/xianshi", method = RequestMethod.POST)
+	public String barChart_xianshi(Model model, Integer id, String selected) {
+		// 字段检查
+		AssertUtil.argIsNotNull(id, "id is null");
+		AssertUtil.strIsNotBlank(selected, "selected is null");
+
+		Commodity commodity = commodityDAO.selectByPrimaryKey(id);
+
+		model.addAttribute("commodity", commodity);
+		model.addAttribute("selected", selected);
+
+		if (selected.equals("年龄分布-柱状图")) {
+			int a[] = new int[26];
+			for (int i = 0; i < a.length; i++) {
+				a[i] = new Double(Math.random() * 10).intValue();
+			}
+
+			List<BarChart> list = billDAO.selectAgeForBarChart(id);
+			for (BarChart barChart : list) {
+				int age = barChart.getAge();
+				if (age < 50) {
+					a[0]++;
+				} else if (age >= 50 && age <= 51) {
+					a[1]++;
+				} else if (age >= 52 && age <= 53) {
+					a[2]++;
+				} else if (age >= 54 && age <= 55) {
+					a[3]++;
+				} else if (age >= 56 && age <= 57) {
+					a[4]++;
+				} else if (age >= 58 && age <= 59) {
+					a[5]++;
+				} else if (age >= 60 && age <= 61) {
+					a[6]++;
+				} else if (age >= 62 && age <= 63) {
+					a[7]++;
+				} else if (age >= 64 && age <= 65) {
+					a[8]++;
+				} else if (age >= 66 && age <= 67) {
+					a[9]++;
+				} else if (age >= 68 && age <= 69) {
+					a[10]++;
+				} else if (age >= 70 && age <= 71) {
+					a[11]++;
+				} else if (age >= 72 && age <= 73) {
+					a[12]++;
+				} else if (age >= 74 && age <= 75) {
+					a[13]++;
+				} else if (age >= 76 && age <= 77) {
+					a[14]++;
+				} else if (age >= 78 && age <= 79) {
+					a[15]++;
+				} else if (age >= 80 && age <= 81) {
+					a[16]++;
+				} else if (age >= 82 && age <= 83) {
+					a[17]++;
+				} else if (age >= 84 && age <= 85) {
+					a[18]++;
+				} else if (age >= 86 && age <= 87) {
+					a[19]++;
+				} else if (age >= 88 && age <= 89) {
+					a[20]++;
+				} else if (age >= 90 && age <= 91) {
+					a[21]++;
+				} else if (age >= 92 && age <= 93) {
+					a[22]++;
+				} else if (age >= 94 && age <= 95) {
+					a[23]++;
+				} else if (age >= 96 && age <= 97) {
+					a[24]++;
+				} else if (age >= 98 && age <= 99) {
+					a[25]++;
+				}
+			}
+			
+			model.addAttribute("ageNumber", a);
+		} else if (selected.equals("上月销量-柱状图")) {
+
+		} else {
+
+		}
+		return "commodity/barChart_xianshi";
+	}
+
 	@RequestMapping(value = "/pieGraph", method = RequestMethod.GET)
 	public String pieGraph(Model model) {
 		model.addAttribute(Constants.ENTITY_CONF, EntityConfigCache.get(Constants.ENTITY_COMMODITY));
@@ -371,8 +456,12 @@ public class CommodityController extends BaseController {
 
 		if (selected.equals("男女比例-饼图")) {
 			List<PieGraph> list = billDAO.selectSex(id);
-			int maleNumber = 0;
-			int femaleNumber = 0;
+			// int maleNumber = 0;
+			// int femaleNumber = 0;
+
+			int maleNumber = 5;
+			int femaleNumber = 3;
+
 			for (PieGraph pieGraph : list) {
 				if (pieGraph.getSex().equals("男")) {
 					maleNumber++;
@@ -384,12 +473,16 @@ public class CommodityController extends BaseController {
 			model.addAttribute("femaleNumber", femaleNumber);
 		} else if (selected.equals("年龄分布-饼图")) {
 			List<PieGraph> list = billDAO.selectAge(id);
-			int age_49 = 0;
-			int age_50_59 = 0;
-			int age_60_69 = 0;
-			int age_70_79 = 0;
-			int age_80_89 = 0;
-			int age_90_99 = 0;
+			/*
+			 * int age_49 = 0; int age_50_59 = 0; int age_60_69 = 0; int age_70_79 = 0; int
+			 * age_80_89 = 0; int age_90_99 = 0;
+			 */
+			int age_49 = 2;
+			int age_50_59 = 3;
+			int age_60_69 = 4;
+			int age_70_79 = 8;
+			int age_80_89 = 1;
+			int age_90_99 = 3;
 			for (PieGraph pieGraph : list) {
 				int age = pieGraph.getAge();
 				if (age < 50) {
@@ -414,9 +507,13 @@ public class CommodityController extends BaseController {
 			model.addAttribute("age_90_99", age_90_99);
 		} else if (selected.equals("评价分布-饼图")) {
 			List<PieGraph> list = billDAO.selectEvaluation(id);
-			int goodNumber = 0;
-			int normalNumber = 0;
-			int badNumber = 0;
+			/*
+			 * int goodNumber = 0; int normalNumber = 0; int badNumber = 0;
+			 */
+
+			int goodNumber = 9;
+			int normalNumber = 2;
+			int badNumber = 1;
 			for (PieGraph pieGraph : list) {
 				if (pieGraph.getEvaluation().equals("好评")) {
 					goodNumber++;

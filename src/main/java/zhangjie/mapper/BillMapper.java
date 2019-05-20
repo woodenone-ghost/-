@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import zhangjie.entity.BarChart;
 import zhangjie.entity.LineChart;
 import zhangjie.entity.PieGraph;
 import zhangjie.model.Bill;
@@ -111,4 +112,6 @@ public interface BillMapper {
 	List<PieGraph> selectAge(Integer idCommdity);
 
 	List<PieGraph> selectEvaluation(Integer idCommdity);
+
+	List<BarChart> selectAgeForBarChart(Integer idCommdity);
 }
