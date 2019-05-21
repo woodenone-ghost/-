@@ -25,9 +25,6 @@
 			    toolbox: {
 			        // y: 'bottom',
 			        feature: {
-			            magicType: {
-			                type: ['stack', 'tiled']
-			            },
 			            dataView: {}
 			        }
 			    },
@@ -55,9 +52,79 @@
 			    }
 			};
         <#elseif selected == "上月销量-柱状图">
-			
+			option = {
+			    title: {
+			        text: '${commodity.businessName}-上月销量-直方图'
+			    },
+			    legend: {
+			        data: ['上月销量'],
+			        align: 'left'
+			    },
+			    toolbox: {
+			        // y: 'bottom',
+			        feature: {
+			            dataView: {}
+			        }
+			    },
+			    tooltip: {},
+			    xAxis: {
+			        data:[<#list lists as a>'${a.time?date}',</#list>],
+			        splitLine: {
+			            show: false
+			        }
+			    },
+			    yAxis: {
+			    },
+			    series: [{
+			        name: '产品销量',
+			        type: 'bar',
+			        data: [<#list lists as a>${a.monthSalesVolume},</#list>],
+			        animationDelay: function (idx) {
+			            return idx * 50;
+			        }
+			    }],
+			    animationEasing: 'elasticOut',
+			    animationDelayUpdate: function (idx) {
+			        return idx * 250;
+			    }
+			};			
         <#elseif selected == "所有产品销量-柱状图">
-		
+			option = {
+			    title: {
+			        text: '${commodity.businessName}-所有产品销量-直方图'
+			    },
+			    legend: {
+			        data: ['所有产品销量'],
+			        align: 'left'
+			    },
+			    toolbox: {
+			        // y: 'bottom',
+			        feature: {
+			            dataView: {}
+			        }
+			    },
+			    tooltip: {},
+			    xAxis: {
+			        data:[<#list commoditys as a>'${a.name}',</#list>],
+			        splitLine: {
+			            show: false
+			        }
+			    },
+			    yAxis: {
+			    },
+			    series: [{
+			        name: '产品销量',
+			        type: 'bar',
+			        data: [<#list commoditys as a>${a.salesVolume},</#list>],
+			        animationDelay: function (idx) {
+			            return idx * 50;
+			        }
+			    }],
+			    animationEasing: 'elasticOut',
+			    animationDelayUpdate: function (idx) {
+			        return idx * 250;
+			    }
+			};		
         </#if>		    
 
         // 使用刚指定的配置项和数据显示图表。

@@ -464,6 +464,8 @@
   
   
   <resultMap id="barChart" type="zhangjie.entity.BarChart">
+    <id column="time" property="time" />
+	<result column="sum(quantity)" property="monthSalesVolume" />
 	<result column="age_buyer" property="age" />
   </resultMap>
   
@@ -472,5 +474,14 @@
     age_buyer
     FROM bill,buyer,userinformation
     WHERE id_commodity = #{id_commodity,jdbcType=INTEGER} AND bill.account_buyer=userinformation.account AND userinformation.id=id_buyer 
+  </select>
+  
+  <select id="selectLastMonthSalesVolume" resultMap="barChart">
+    SELECT
+    time,SUM(quantity)
+    FROM bill
+    WHERE id_commodity = #{id_commodity} AND time &gt;= #{firstDay} AND time &lt;= #{finalDay}
+    GROUP BY time
+    ORDER BY time ASC
   </select>
 </mapper>

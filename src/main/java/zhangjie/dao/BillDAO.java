@@ -1,10 +1,12 @@
 package zhangjie.dao;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import zhangjie.entity.BarChart;
@@ -112,6 +114,13 @@ public class BillDAO extends BaseDAO<Bill, BillExample, BillMapper> {
 	public List<BarChart> selectAgeForBarChart(Integer idCommdity) {
 		AssertUtil.argIsNotNull(idCommdity, "idCommodity is null");
 		return this.getMapper().selectAgeForBarChart(idCommdity);
+	}
+
+	public List<BarChart> selectLastMonthSalesVolume(Integer idCommdity, LocalDate firstDay, LocalDate finalDay) {
+		AssertUtil.argIsNotNull(idCommdity, "idCommodity is null");
+		AssertUtil.argIsNotNull(firstDay, "firstDay is null");
+		AssertUtil.argIsNotNull(finalDay, "finalDay is null");
+		return this.getMapper().selectLastMonthSalesVolume(idCommdity, firstDay, finalDay);
 	}
 
 	@Override

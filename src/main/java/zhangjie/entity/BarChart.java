@@ -1,7 +1,29 @@
 package zhangjie.entity;
 
+import java.time.LocalDate;
+
 public class BarChart {
+	private String name;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	private int age;
+	private LocalDate time;
+
+	public LocalDate getTime() {
+		return time;
+	}
+
+	public void setTime(LocalDate time) {
+		this.time = time;
+	}
+
 	private int monthSalesVolume;
 	private int commoditySalesVolume;
 

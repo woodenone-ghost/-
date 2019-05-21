@@ -3,8 +3,10 @@ package zhangjie.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -430,12 +432,35 @@ public class CommodityController extends BaseController {
 					a[25]++;
 				}
 			}
-			
+
 			model.addAttribute("ageNumber", a);
 		} else if (selected.equals("上月销量-柱状图")) {
+			LocalDate now = LocalDate.now();
+			LocalDate lastMonth = now.plusMonths(-1);
+			LocalDate firstDay = LocalDate.of(now.getYear(), lastMonth.getMonthValue(), 1);
+			LocalDate finalDay = firstDay.plusMonths(1).plusDays(-1);
 
+			BarChart a[] = new BarChart[finalDay.getDayOfMonth()];
+			for (int i = 0; i < a.length; i++) {
+				a[i] = new BarChart();
+				a[i].setTime(firstDay.plusDays(i));
+				a[i].setMonthSalesVolume(new Double(Math.random() * 100).intValue());
+			}
+
+			List<BarChart> barCharts = billDAO.selectLastMonthSalesVolume(id, firstDay, finalDay);
+			for (BarChart barChart : barCharts) {
+				int i = barChart.getTime().getDayOfMonth() - 1;
+				a[i].setMonthSalesVolume(barChart.getMonthSalesVolume());
+			}
+			model.addAttribute("lists", a);
 		} else {
-
+			Map<String, String> qryParamMap = new HashMap<String, String>();
+			qryParamMap.put("businessNameZ", commodity.getBusinessName());
+			List<Commodity> list = commodityDAO.selectByList(qryParamMap);
+			for (Commodity commodity2 : list) {
+				commodity2.setSalesVolume(new Double(Math.random() * 20).intValue());
+			}
+			model.addAttribute("commoditys", list);
 		}
 		return "commodity/barChart_xianshi";
 	}

@@ -1,5 +1,6 @@
 package zhangjie.mapper;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -114,4 +115,6 @@ public interface BillMapper {
 	List<PieGraph> selectEvaluation(Integer idCommdity);
 
 	List<BarChart> selectAgeForBarChart(Integer idCommdity);
+	
+	List<BarChart> selectLastMonthSalesVolume(@Param("id_commodity")Integer idCommdity, @Param("firstDay")LocalDate firstDay, @Param("finalDay")LocalDate finalDay);
 }
