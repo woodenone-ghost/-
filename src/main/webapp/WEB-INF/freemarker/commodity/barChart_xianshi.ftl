@@ -4,9 +4,9 @@
 <#include "/macro/qryForm.ftl"/>
 <#include "/macro/manage_modal.ftl"/>
 
-<@modalShow title=selected>
+<@modalShow1 title=selected>
 
-</@modalShow>
+</@modalShow1>
 
 <script>		
 		// 基于准备好的dom，初始化echarts实例
@@ -124,7 +124,65 @@
 			    animationDelayUpdate: function (idx) {
 			        return idx * 250;
 			    }
-			};		
+			};	
+		<#elseif selected == "上月评价-柱状图">	
+			option = {
+			    title: {
+			        text: '${commodity.name}-上月评价-柱状图'
+			    },
+			    legend: {
+			        data: ['好评', '中评','差评'],
+			        align: 'left'
+			    },
+			    toolbox: {
+			        // y: 'bottom',
+			        feature: {
+			            magicType: {
+			                type: ['stack', 'tiled']
+			            },
+			            dataView: {},
+			            saveAsImage: {
+			                pixelRatio: 2
+			            }
+			        }
+			    },
+			    tooltip: {},
+			    xAxis: {
+			        data:[<#list goodEvaluation as a>'${a.time?date}',</#list>],
+			        silent: false,
+			        splitLine: {
+			            show: false
+			        }
+			    },
+			    yAxis: {
+			    },
+			    series: [{
+			        name: '好评',
+			        type: 'bar',
+			        data: [<#list goodEvaluation as a>${a.evaluationNumber},</#list>],
+			        animationDelay: function (idx) {
+			            return idx * 40;
+			        }
+			    }, {
+			        name: '中评',
+			        type: 'bar',
+			        data: [<#list normalEvaluation as a>${a.evaluationNumber},</#list>],
+			        animationDelay: function (idx) {
+			            return idx * 50;
+			        }
+			    },{
+			        name: '差评',
+			        type: 'bar',
+			        data: [<#list badEvaluation as a>${a.evaluationNumber},</#list>],
+			        animationDelay: function (idx) {
+			            return idx * 60;
+			        }			    
+			    }],
+			    animationEasing: 'elasticOut',
+			    animationDelayUpdate: function (idx) {
+			        return idx * 5;
+			    }
+			};
         </#if>		    
 
         // 使用刚指定的配置项和数据显示图表。

@@ -96,7 +96,7 @@
 	 	function Formatter(value, row) {   	
 	    	var id1=row.id
 	    	var result="<select class=\"form-control\" id=\""+id1+"_select\">"
-	    	result=result+ "<option>年龄分布-柱状图</option><option>上月销量-柱状图</option><option>所有产品销量-柱状图</option></select>"
+	    	result=result+ "<option>年龄分布-柱状图</option><option>上月销量-柱状图</option><option>上月评价-柱状图</option><option>所有产品销量-柱状图</option></select>"
 	    	return result
   		}
   		

@@ -35,7 +35,7 @@
 <#macro page_head> <!-- 固定在网页上端的页头 -->
 	<#if Session.SESSION_KEY_USER?exists>
     	<#assign userInformation=Session.SESSION_KEY_USER />
-		<nav class="navbar navbar-expand-lg bg-light navbar-light fixed-top" role="navigation">
+		<nav class="navbar navbar-expand-lg bg-light navbar-light" role="navigation">
 			<a class="navbar-brand w-25" href="${ctx}/login">欢迎！${userInformation.account}</a>
 			<ul class="navbar-nav" style="position: relative;width:75%">
 				<form class="form-inline w-75" action="${ctx}/commodity/gotoSearch" id="qryForm">
@@ -127,7 +127,7 @@
   			</ul>
 		</nav>				
 	<#else>
-		<nav class="navbar navbar-expand-lg bg-light navbar-light fixed-top" role="navigation">
+		<nav class="navbar navbar-expand-lg bg-light navbar-light" role="navigation">
 			<a class="navbar-brand w-25" href="#">养老服务管理系统</a>
 			<ul class="navbar-nav" style="position: relative;width:75%">
 				<form class="form-inline w-75" action="${ctx}/commodity/gotoSearch" id="qryForm">
@@ -193,7 +193,7 @@
 					    	<option>助洁-购物</option>
 					        <option>助洁-打扫</option>
 					        <option>助餐-上门助餐</option>
-					        <option>助洁-购物</option>
+					        <option>助餐-老年食堂</option>
 					        <option>助医-护理保健</option>
 					        <option>助医-上门诊治</option>
 					        <option>康乐服务-聊天解闷</option>
@@ -241,13 +241,13 @@
 </#macro>
 
 <#macro page_body> <!-- 网页主题内容 -->
-    <div class="container-fluid" style="padding-left:0px;padding-right:0px;position: relative;top: 105px;">
+    <div class="container-fluid" style="padding-left:0px;padding-right:0px;">
     	<#nested />
     </div>
 </#macro>
 
 <#macro page_tail> <!-- 页尾 -->
-	<nav class="navbar navbar-expand-sm bg-secondary navbar-dark fixed-bottom">
+	<nav class="navbar navbar-expand-sm bg-secondary navbar-dark">
   		<ul class="navbar-nav">
     		<li class="nav-item active">
       			<a class="nav-link" href="${ctx}/aboutWeb">关于网站</a>

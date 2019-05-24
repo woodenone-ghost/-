@@ -13,10 +13,11 @@
 		id="${entityAbbr}QryTable"
   		data-toggle="table"
   		data-pagination="true"
-  		data-url="${ctx}/commodity/qry"
   		data-side-pagination="server"
   		data-query-params="queryParams"
-  		data-query-params-type=''>
+  		data-query-params-type=''
+  		data-url="${ctx}/commodity/qry"
+  		data-response-handler="responseHandler">
   		<thead>
 			<tr>
 				<th data-field="id">${entityConf.fields["id"].fName}</th>
@@ -50,66 +51,11 @@
     		return params
   		}
   		
-  		 function getData(number, size) {
-    	 	$.get('${basePath}/qry', {
-      			pageNumber: number,
-      			pageSize: size,
-      			_QRY_name : $("#_QRY_name").val(),
-      			_QRY_category : $("#_QRY_category").val(),
-    		}, function (data) {
-    		var $qryTable=$("#${entityAbbr}QryTable");
-      		$qryTable.bootstrapTable("load", data.data.pager)
-    		})
- 		}
- 		
-		$(document).ready(function(){				
-			var $qryForm=$("#qryForm");
-			var $qryTable=$("#${entityAbbr}QryTable");
-			
-			$qryTable.on('page-change.bs.table', function (e, number, size) {
-      			getData(number, size)
-    		})
-			
-			<!-- 格式检验代码 -->
-			$qryForm.validate({
-				rules:{
-					_QRY_name: {
-						required:true,
-						maxlength:32},	
-					_QRY_category: {
-						required:true,
-						maxlength:16}
-				},
-	        	submitHandler:function(form){
-	            	$("#qryButton").attr("disabled","disabled");
-	            	$(form).ajaxSubmit({
-	                	type:"post",
-	                    dateType:"json",
-	                    success:function(resp){
-	                    	$.dealAjaxResp(resp,function(data){
-	                        	$("#qryButton").removeAttr("disabled");
-	                            $qryTable.bootstrapTable("load",data.pager);
-	                        });
-	                    }
-	                });
-	            },
-	            errorPlacement:function(error,element){
-	                error.appendTo(element.parent());
-	            }
-        	});
-        	
-        	$.post("${ctx}/commodity/qry",
-			  {
-			    _QRY_name : $("#_QRY_name").val(),
-      			_QRY_category : $("#_QRY_category").val(),
-      			pageNumber : 1,
-      			pageSize : 10
-			  },
-			  function(data){
-			    $qryTable.bootstrapTable("load",data.data.pager);
-			  });  	        	      	
-        			
-		}); 			
+  		function responseHandler(res) {
+    		return res.data.pager
+  		}
+  		
+  			
 	</script>
 </@html>
 

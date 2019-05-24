@@ -1,10 +1,7 @@
 package zhangjie.mapper;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
-
 import org.apache.ibatis.annotations.Param;
 
 import zhangjie.entity.BarChart;
@@ -117,4 +114,10 @@ public interface BillMapper {
 	List<BarChart> selectAgeForBarChart(Integer idCommdity);
 	
 	List<BarChart> selectLastMonthSalesVolume(@Param("id_commodity")Integer idCommdity, @Param("firstDay")LocalDate firstDay, @Param("finalDay")LocalDate finalDay);
+	
+	List<BarChart> selectGoodEvaluation1(@Param("id_commodity")Integer idCommdity, @Param("firstDay")LocalDate firstDay, @Param("finalDay")LocalDate finalDay);
+	
+	List<BarChart> selectNormalEvaluation1(@Param("id_commodity")Integer idCommdity, @Param("firstDay")LocalDate firstDay, @Param("finalDay")LocalDate finalDay);
+
+	List<BarChart> selectBadEvaluation1(@Param("id_commodity")Integer idCommdity, @Param("firstDay")LocalDate firstDay, @Param("finalDay")LocalDate finalDay);
 }

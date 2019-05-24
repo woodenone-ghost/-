@@ -4,6 +4,19 @@ import java.time.LocalDate;
 
 public class BarChart {
 	private String name;
+	private int age;
+	private LocalDate time;
+	private int monthSalesVolume;
+	private int commoditySalesVolume;
+	private int evaluationNumber;
+
+	public int getEvaluationNumber() {
+		return evaluationNumber;
+	}
+
+	public void setEvaluationNumber(int evaluationNumber) {
+		this.evaluationNumber = evaluationNumber;
+	}
 
 	public String getName() {
 		return name;
@@ -13,8 +26,13 @@ public class BarChart {
 		this.name = name;
 	}
 
-	private int age;
-	private LocalDate time;
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
 
 	public LocalDate getTime() {
 		return time;
@@ -22,17 +40,6 @@ public class BarChart {
 
 	public void setTime(LocalDate time) {
 		this.time = time;
-	}
-
-	private int monthSalesVolume;
-	private int commoditySalesVolume;
-
-	public int getAge() {
-		return age;
-	}
-
-	public void setAge(int age) {
-		this.age = age;
 	}
 
 	public int getMonthSalesVolume() {

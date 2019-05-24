@@ -420,17 +420,17 @@
     
   <select id="selectGoodEvaluation" parameterType="java.lang.Integer" resultMap="DateAndSalesVolumeResultMap">
     select
-    COUNT(evaluation)
+    time,COUNT(evaluation)
     from bill
-    where id_commodity = #{id_commodity,jdbcType=INTEGER} and evaluation ="好评"
+    where id_commodity = #{id_commodity,jdbcType=INTEGER} and evaluation ="好评" and state like '已%'
     GROUP BY time
   </select> 
   
   <select id="selectBadEvaluation" parameterType="java.lang.Integer" resultMap="DateAndSalesVolumeResultMap">
     select
-    COUNT(evaluation)
+    time,COUNT(evaluation)
     from bill
-    where id_commodity = #{id_commodity,jdbcType=INTEGER} and evaluation ="差评"
+    where id_commodity = #{id_commodity,jdbcType=INTEGER} and evaluation ="差评" and state like '已%'
     GROUP BY time
   </select> 
   
@@ -466,6 +466,7 @@
   <resultMap id="barChart" type="zhangjie.entity.BarChart">
     <id column="time" property="time" />
 	<result column="sum(quantity)" property="monthSalesVolume" />
+	<result column="COUNT(evaluation)" property="evaluationNumber" />
 	<result column="age_buyer" property="age" />
   </resultMap>
   
@@ -483,5 +484,29 @@
     WHERE id_commodity = #{id_commodity} AND time &gt;= #{firstDay} AND time &lt;= #{finalDay}
     GROUP BY time
     ORDER BY time ASC
+  </select>
+  
+  <select id="selectGoodEvaluation1" resultMap="barChart">
+    select
+    time,COUNT(evaluation)
+    from bill
+    where id_commodity = #{id_commodity,jdbcType=INTEGER} and evaluation ="好评" and state like '已%' AND time &gt;= #{firstDay} AND time &lt;= #{finalDay}
+    GROUP BY time
+  </select> 
+  
+  <select id="selectNormalEvaluation1" resultMap="barChart">
+    select
+    time,COUNT(evaluation)
+    from bill
+    where id_commodity = #{id_commodity,jdbcType=INTEGER} and evaluation ="中评" and state like '已%' AND time &gt;= #{firstDay} AND time &lt;= #{finalDay}
+    GROUP BY time
+  </select>
+  
+  <select id="selectBadEvaluation1" resultMap="barChart">
+    select
+    time,COUNT(evaluation)
+    from bill
+    where id_commodity = #{id_commodity,jdbcType=INTEGER} and evaluation ="差评" and state like '已%' AND time &gt;= #{firstDay} AND time &lt;= #{finalDay}
+    GROUP BY time
   </select>
 </mapper>

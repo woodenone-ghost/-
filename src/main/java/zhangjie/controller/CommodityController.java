@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -312,40 +311,28 @@ public class CommodityController extends BaseController {
 		model.addAttribute("commodity", commodity);
 		model.addAttribute("selected", selected);
 
-		List<LineChart> list2 = new ArrayList<LineChart>();
 		logger.info(list);
 		if (selected.equals("好评数-时间-折线图")) {
 			List<LineChart> list1 = billDAO.selectGoodEvaluation(id);
-			for (int i = 0; i < list.size(); i++) {
-				LineChart dateAndSalesVolume = new LineChart();
-				dateAndSalesVolume.setTime(list.get(i).getTime());
-				dateAndSalesVolume.setSalesVolume(list.get(i).getSalesVolume());
-				dateAndSalesVolume.setBillNumber(list.get(i).getBillNumber());
-				if (i >= list1.size()) {
-					dateAndSalesVolume.setEvaluationNumber(0);
-				} else {
-					dateAndSalesVolume.setEvaluationNumber(list1.get(i).getEvaluationNumber());
+			for (LineChart lineChart1 : list1) {
+				loop1: for (LineChart lineChart : list) {
+					if (lineChart.getTime().equals(lineChart1.getTime())) {
+						lineChart.setEvaluationNumber(lineChart1.getEvaluationNumber());
+						break loop1;
+					}
 				}
-				list2.add(dateAndSalesVolume);
 			}
-			model.addAttribute("list1", list2);
-			return "commodity/lineChart_xianshi";
+			model.addAttribute("list1", list);
 		} else if (selected.equals("差评数-时间-折线图")) {
 			List<LineChart> list1 = billDAO.selectBadEvaluation(id);
-			for (int i = 0; i < list.size(); i++) {
-				LineChart dateAndSalesVolume = new LineChart();
-				dateAndSalesVolume.setTime(list.get(i).getTime());
-				dateAndSalesVolume.setSalesVolume(list.get(i).getSalesVolume());
-				dateAndSalesVolume.setBillNumber(list.get(i).getBillNumber());
-				if (i >= list1.size()) {
-					dateAndSalesVolume.setEvaluationNumber(0);
-				} else {
-					dateAndSalesVolume.setEvaluationNumber(list1.get(i).getEvaluationNumber());
+			for (LineChart lineChart1 : list1) {
+				for (LineChart lineChart : list) {
+					if (lineChart.getTime().equals(lineChart1.getTime())) {
+						lineChart.setEvaluationNumber(lineChart1.getEvaluationNumber());
+					}
 				}
-				list2.add(dateAndSalesVolume);
 			}
-			model.addAttribute("list1", list2);
-			return "commodity/lineChart_xianshi";
+			model.addAttribute("list1", list);
 		}
 
 		model.addAttribute("list1", list);
@@ -453,6 +440,55 @@ public class CommodityController extends BaseController {
 				a[i].setMonthSalesVolume(barChart.getMonthSalesVolume());
 			}
 			model.addAttribute("lists", a);
+		} else if (selected.equals("上月评价-柱状图")) {
+			LocalDate now = LocalDate.now();
+			LocalDate lastMonth = now.plusMonths(-1);
+			LocalDate firstDay = LocalDate.of(now.getYear(), lastMonth.getMonthValue(), 1);
+			LocalDate finalDay = firstDay.plusMonths(1).plusDays(-1);
+
+			BarChart goodEvaluation[] = new BarChart[finalDay.getDayOfMonth()];
+			for (int i = 0; i < goodEvaluation.length; i++) {// 初始化好评数
+				goodEvaluation[i] = new BarChart();
+				goodEvaluation[i].setTime(firstDay.plusDays(i));
+				goodEvaluation[i].setEvaluationNumber(new Double(Math.random() * 100).intValue());
+			}
+			
+			List<BarChart> barCharts_goodEvaluation = billDAO.selectGoodEvaluation1(id, firstDay, finalDay);
+			for (BarChart barChart : barCharts_goodEvaluation) {
+				int i = barChart.getTime().getDayOfMonth() - 1;
+				goodEvaluation[i].setEvaluationNumber(barChart.getEvaluationNumber());
+			}
+			model.addAttribute("goodEvaluation", goodEvaluation);
+
+			BarChart normalEvaluation[] = new BarChart[finalDay.getDayOfMonth()];
+			for (int i = 0; i < normalEvaluation.length; i++) {// 初始化中评数
+				normalEvaluation[i] = new BarChart();
+				normalEvaluation[i].setTime(firstDay.plusDays(i));
+				normalEvaluation[i].setEvaluationNumber(new Double(Math.random() * 100).intValue());
+			}
+			
+			List<BarChart> barCharts_normalEvaluation = billDAO.selectNormalEvaluation1(id, firstDay, finalDay);
+			for (BarChart barChart : barCharts_normalEvaluation) {
+				int i = barChart.getTime().getDayOfMonth() - 1;
+				normalEvaluation[i].setEvaluationNumber(barChart.getEvaluationNumber());
+			}
+			model.addAttribute("normalEvaluation", normalEvaluation);
+
+			BarChart badEvaluation[] = new BarChart[finalDay.getDayOfMonth()];
+			for (int i = 0; i < badEvaluation.length; i++) {// 初始化差评数
+				badEvaluation[i] = new BarChart();
+				badEvaluation[i].setTime(firstDay.plusDays(i));
+				badEvaluation[i].setEvaluationNumber(new Double(Math.random() * 100).intValue());
+			}
+			
+			List<BarChart> barCharts_badEvaluation = billDAO.selectBadEvaluation1(id, firstDay, finalDay);
+			for (BarChart barChart : barCharts_badEvaluation) {
+				int i = barChart.getTime().getDayOfMonth() - 1;
+				badEvaluation[i].setEvaluationNumber(barChart.getEvaluationNumber());
+			}
+			model.addAttribute("badEvaluation", badEvaluation);
+			
+			
 		} else {
 			Map<String, String> qryParamMap = new HashMap<String, String>();
 			qryParamMap.put("businessNameZ", commodity.getBusinessName());

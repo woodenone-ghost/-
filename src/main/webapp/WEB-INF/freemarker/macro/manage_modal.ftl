@@ -12,7 +12,20 @@
 	<div class="modal-header">
         <h4 class="modal-title" id="modalTitle">${title}</h4>
     </div>
-    <div class="modal-body" id="main" style="width: 700px;height:500px;">
+    <div class="modal-body">
+		<#nested />
+	</div>
+    <div class="modal-footer">  	
+    	<button type="button" id="closeButton" class="btn btn-warning" data-dismiss="modal">关闭</button>
+    </div>
+</#macro>
+
+
+<#macro modalShow1 title>
+	<div class="modal-header">
+        <h4 class="modal-title" id="modalTitle">${title}</h4>
+    </div>
+    <div class="modal-body" id="main" style="width:800px;height:500px;">
 		<#nested />
 	</div>
     <div class="modal-footer">  	

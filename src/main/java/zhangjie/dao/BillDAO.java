@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import zhangjie.entity.BarChart;
@@ -121,6 +120,27 @@ public class BillDAO extends BaseDAO<Bill, BillExample, BillMapper> {
 		AssertUtil.argIsNotNull(firstDay, "firstDay is null");
 		AssertUtil.argIsNotNull(finalDay, "finalDay is null");
 		return this.getMapper().selectLastMonthSalesVolume(idCommdity, firstDay, finalDay);
+	}
+
+	public List<BarChart> selectGoodEvaluation1(Integer idCommdity, LocalDate firstDay, LocalDate finalDay) {
+		AssertUtil.argIsNotNull(idCommdity, "idCommodity is null");
+		AssertUtil.argIsNotNull(firstDay, "firstDay is null");
+		AssertUtil.argIsNotNull(finalDay, "finalDay is null");
+		return this.getMapper().selectGoodEvaluation1(idCommdity, firstDay, finalDay);
+	}
+
+	public List<BarChart> selectNormalEvaluation1(Integer idCommdity, LocalDate firstDay, LocalDate finalDay) {
+		AssertUtil.argIsNotNull(idCommdity, "idCommodity is null");
+		AssertUtil.argIsNotNull(firstDay, "firstDay is null");
+		AssertUtil.argIsNotNull(finalDay, "finalDay is null");
+		return this.getMapper().selectNormalEvaluation1(idCommdity, firstDay, finalDay);
+	}
+
+	public List<BarChart> selectBadEvaluation1(Integer idCommdity, LocalDate firstDay, LocalDate finalDay) {
+		AssertUtil.argIsNotNull(idCommdity, "idCommodity is null");
+		AssertUtil.argIsNotNull(firstDay, "firstDay is null");
+		AssertUtil.argIsNotNull(finalDay, "finalDay is null");
+		return this.getMapper().selectBadEvaluation1(idCommdity, firstDay, finalDay);
 	}
 
 	@Override
