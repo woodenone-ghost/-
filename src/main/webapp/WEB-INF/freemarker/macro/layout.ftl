@@ -250,12 +250,9 @@
 	<nav class="navbar navbar-expand-sm bg-secondary navbar-dark">
   		<ul class="navbar-nav">
     		<li class="nav-item active">
-      			<a class="nav-link" href="${ctx}/aboutWeb">关于网站</a>
-    		</li>
-    		<li class="nav-item" style="position:relative;left:80px">
       			<a class="nav-link" href="${ctx}/aboutAuthor">关于作者</a>
     		</li>
-    		<li class="nav-item" style="position:relative;left:165px">
+    		<li class="nav-item" style="position:relative;left:80px">
       			<a class="nav-link" href="https://github.com/woodenone-ghost/bishe">Github</a>
     		</li>
   		</ul>

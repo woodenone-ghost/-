@@ -36,24 +36,24 @@ public class CommonController extends BaseController {
 	@RequestMapping(value = "/userInformation", method = RequestMethod.GET)
 	public String userInformation(Model model) {
 		String identity = this.getSessionUser().getIdentity();
-		int id=this.getSessionUser().getId();
-		if(identity.equals("buyer")) {
-			Buyer entity=buyerDAO.selectByPrimaryKey(id);
+		int id = this.getSessionUser().getId();
+		if (identity.equals("buyer")) {
+			Buyer entity = buyerDAO.selectByPrimaryKey(id);
 			model.addAttribute(Constants.ENTITY_CONF, EntityConfigCache.get(Constants.ENTITY_BUYER));
 			model.addAttribute(Constants.ENTITY_RESULT, entity);
-		}else if(identity.equals("seller")) {
-			Seller entity=sellerDAO.selectByPrimaryKey(id);
+		} else if (identity.equals("seller")) {
+			Seller entity = sellerDAO.selectByPrimaryKey(id);
 			model.addAttribute(Constants.ENTITY_CONF, EntityConfigCache.get(Constants.ENTITY_SELLER));
 			model.addAttribute(Constants.ENTITY_RESULT, entity);
 		}
 		return "common/userInformation";
 	}
-	
+
 	@RequestMapping(value = "/userInformation/submit", method = RequestMethod.POST)
-	public @ResponseBody AjaxResult userInformationSubmit(Buyer buyer,Seller seller) {
+	public @ResponseBody AjaxResult userInformationSubmit(Buyer buyer, Seller seller) {
 		// 字段检查
-		if(buyer.getIdBuyer()!=null) {//传输的买家信息
-			Buyer entity=buyer;
+		if (buyer.getIdBuyer() != null) {// 传输的买家信息
+			Buyer entity = buyer;
 			Integer idBuyer = entity.getIdBuyer();
 
 			// 字段检查
@@ -66,8 +66,8 @@ public class CommonController extends BaseController {
 			logger.info(String.format("修改买家开始：%s", BeanUtil.desc(dbentity, null)));
 			buyerDAO.update(entity);
 			logger.info(String.format("修改买家结束：%s", BeanUtil.desc(entity, null)));
-		}else {
-			Seller entity=seller;
+		} else {
+			Seller entity = seller;
 			Integer idSeller = entity.getIdSeller();
 
 			// 字段检查
@@ -116,5 +116,15 @@ public class CommonController extends BaseController {
 		logger.info("修改密码结束");
 
 		return commonBO.buildSuccessResult();
+	}
+
+	@RequestMapping(value = "common/error", method = RequestMethod.GET)
+	public String manage(Model model) {
+		return "common/error";
+	}
+
+	@RequestMapping(value = "/aboutAuthor", method = RequestMethod.GET)
+	public String aboutAuthor(Model model) {
+		return "common/aboutAuthor";
 	}
 }

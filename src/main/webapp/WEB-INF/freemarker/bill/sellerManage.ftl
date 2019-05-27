@@ -27,9 +27,14 @@
 	    					<li class="nav-item">
 	      						<a class="nav-link" href="${ctx}/bill/sellerManage">管 理 账 单</a>
 	    					</li>
-	    					<li class="nav-item">
-	      						<a class="nav-link" href="#">图 表 查 看</a>
-	    					</li>    					
+	    					<li class="nav-item dropdown">
+						    	<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">图 表 查 看</a>
+						    	<div class="dropdown-menu">
+						    		<a class="dropdown-item" href="${ctx}/commodity/lineChart">折 线 图</a>
+						      		<a class="dropdown-item" href="${ctx}/commodity/barChart">柱 状 图</a>
+						      		<a class="dropdown-item" href="${ctx}/commodity/pieGraph">饼 图</a>
+						    	</div>
+						    </li> 	  					
 	  					</ul>
 				</nav>
 			</div>  			

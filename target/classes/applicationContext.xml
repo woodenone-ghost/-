@@ -75,7 +75,7 @@
 			<mvc:exclude-mapping path="/resources/**" />
 			<bean id="sessionChecker" class="zhangjie.web.interceptor.SessionChecker">
 				<property name="ignoredUrls"
-					value="/,/login,/login/submit,/loginout,/manager/login,/register,/register/submit,/register/identity,
+					value="/,/login,/login/submit,/loginout,/manager/login,/register,/register/submit,/register/identity,/aboutAuthor,
 					/register/buyer/submit,/register/seller/submit,/noPermission,/commodity/gotoSearch,/commodity/qry,/commodity/detail,/bill/getEvaluationWords"></property>
 				<property name="managerPermissions"
 					value="/changePassword,/changePassword/submit,
