@@ -52,6 +52,7 @@
                             $.dealAjaxResp(resp,function(data){
                                 $.jumpTo("${ctx}/login");
                             });
+                            location.reload();
                         }
                     });
                 },

@@ -82,7 +82,8 @@
 					/buyer/manage,/buyer/qry,/buyer/edit,/buyer/edit/submit,/buyer/delete,/buyer/detail,
 					/seller/manage,/seller/qry,/seller/edit,/seller/edit/submit,/seller/delete,/seller/detail,
 					/commodity/manage,/commodity/edit,/commodity/edit/submit,/commodity/delete,
-					/bill/manage,/bill/qry,/bill/edit,/bill/edit/submit,/bill/delete,/bill/detail"></property>
+					/bill/manage,/bill/qry,/bill/edit,/bill/edit/submit,/bill/delete,/bill/detail,
+					/commodity/lineChart,/commodity/lineChart/xianshi,/commodity/barChart,/commodity/barChart/xianshi,/commodity/pieGraph,/commodity/pieGraph/xianshi"></property>
 				<property name="buyerPermissions"
 					value="/changePassword,/changePassword/submit,/userInformation,/userInformation/submit,
 					/bill/add,/bill/qry,/bill/detail,/bill/delete,/bill/notEvaluateBills,/bill/evaluate,/bill/evaluate/submit,/bill/notBills,"></property>

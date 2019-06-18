@@ -1,4 +1,4 @@
-<#macro qryForm id action type="true">
+<#macro qryForm id action type="true" buttonStyle="">
     <form id="${id}Form" class="form-inline" action="${action}" method="POST" style="position: relative;top: 30px;">
         <input type="hidden" id="${id}_pageNum" name="pageNumber" value="1" />
         <input type="hidden" id="${id}_pageSize" name="pageSize" value="10" />
@@ -14,7 +14,7 @@
 				</div>
 				<#assign userInformation=Session.SESSION_KEY_USER />
 				<#if userInformation.identity!="buyer">
-					<div class="col-lg-1" style="position: relative;left: 40px;margin-bottom: 15px;">
+					<div class="col-lg-1" style="position: relative;left: 40px;margin-bottom: 15px; ${buttonStyle}">
 						<button type="button" id="editButton" class="btn btn-warning">修 改</button>
 					</div>
 				</#if>

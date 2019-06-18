@@ -39,7 +39,7 @@
 				</nav>
 			</div>  			
   			<div class="col-lg-10"> <!-- 网页具体内容 -->
-				<@qryForm id="${entityAbbr}Qry" action="${basePath}/qry">
+				<@qryForm id="${entityAbbr}Qry" action="${basePath}/qry" buttonStyle="display:none;">
 					<@qryInput fId="id" colClass="col-lg-6" />
 					<@qryInput fId="accountBuyer" colClass="col-lg-6" />
 					<@qryInput fId="idCommodity" colClass="col-lg-6" />

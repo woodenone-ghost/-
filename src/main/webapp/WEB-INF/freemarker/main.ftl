@@ -29,6 +29,7 @@
 							<!-- 未发货账单表格展示 -->
 							<table
 							  id="QryTable1"
+							  data-unique-id="id"
 			  			      data-toggle="table"
 			  			      data-pagination="true"
 			  			      data-side-pagination="server"
@@ -309,7 +310,8 @@
 	             $.post(url,function(data){
 				 	if(data.code==00){
 				 		alert("撤销成功！");
-				 		location.reload(true);
+				 		var $qryTable=$("#QryTable1");
+				 		$qryTable.bootstrapTable('removeByUniqueId', id);
 				 	}
 	             });
   			 }
@@ -366,8 +368,7 @@
 				$qryForm.validate({
 					rules:{
 						_QRY_id: {zhengzhengshu:true},
-						_QRY_idCommodity: {zhengzhengshu:true},
-						_QRY_accountSeller: {zhengzhengshu:32}
+						_QRY_idCommodity: {zhengzhengshu:true}
 					},
 		        	submitHandler:function(form){
 		            	$("#qryButton").attr("disabled","disabled");

@@ -424,7 +424,7 @@ public class CommodityController extends BaseController {
 		} else if (selected.equals("上月销量-柱状图")) {
 			LocalDate now = LocalDate.now();
 			LocalDate lastMonth = now.plusMonths(-1);
-			LocalDate firstDay = LocalDate.of(now.getYear(), lastMonth.getMonthValue(), 1);
+			LocalDate firstDay = LocalDate.of(lastMonth.getYear(), lastMonth.getMonthValue(), 1);
 			LocalDate finalDay = firstDay.plusMonths(1).plusDays(-1);
 
 			BarChart a[] = new BarChart[finalDay.getDayOfMonth()];
